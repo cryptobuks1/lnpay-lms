@@ -44,4 +44,42 @@ class AuthCest
         $I->seeResponseIsJson();
         $I->seeResponseContains('"id":"usr_XIXkpKKKSJmDqW"');
     }
+
+    public function queryParamAuthFail(\ApiTester $I)
+    {
+        $I->haveHttpHeader('Content-Type', 'application/json');
+        $I->sendGET('/v1/user/view?access-token=sak_fail');
+        $I->seeResponseCodeIs(\Codeception\Util\HttpCode::UNAUTHORIZED);
+        $I->seeResponseIsJson();
+        $I->seeResponseContains('"name":"Unauthorized"');
+    }
+
+    public function queryParamAuthSuccess(\ApiTester $I)
+    {
+        $I->haveHttpHeader('Content-Type', 'application/json');
+        $I->sendGET('/v1/user/view?access-token=sak_KkKkKkKkKkneieivTI05Fm3YzTza4N');
+        $I->seeResponseCodeIs(\Codeception\Util\HttpCode::OK);
+        $I->seeResponseIsJson();
+        $I->seeResponseContains('"id":"usr_XIXkpKKKSJmDqW"');
+    }
+
+    public function headerAuthFail(\ApiTester $I)
+    {
+        $I->haveHttpHeader('Content-Type', 'application/json');
+        $I->haveHttpHeader('X-Api-Key', 'sak_fail');
+        $I->sendGET('/v1/user/view');
+        $I->seeResponseCodeIs(\Codeception\Util\HttpCode::UNAUTHORIZED);
+        $I->seeResponseIsJson();
+        $I->seeResponseContains('"name":"Unauthorized"');
+    }
+
+    public function headerAuthSuccess(\ApiTester $I)
+    {
+        $I->haveHttpHeader('Content-Type', 'application/json');
+        $I->haveHttpHeader('X-Api-Key', 'sak_KkKkKkKkKkneieivTI05Fm3YzTza4N');
+        $I->sendGET('/v1/user/view');
+        $I->seeResponseCodeIs(\Codeception\Util\HttpCode::OK);
+        $I->seeResponseIsJson();
+        $I->seeResponseContains('"id":"usr_XIXkpKKKSJmDqW"');
+    }
 }

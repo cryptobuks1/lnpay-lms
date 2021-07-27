@@ -5,9 +5,9 @@ namespace app\tests\fixtures;
 use yii\db\ActiveRecord;
 use yii\test\ActiveFixture;
 
-class AuthAssignmentFixture extends ActiveFixture
+class AuthItemChildFixture extends ActiveFixture
 {
     public $depends = ['app\tests\fixtures\AuthItemFixture'];
-    public $dataFile = '@app/tests/_data/auth_assignment.php';
-    public $tableName = 'auth_assignment';
+    public $dataFile = '@app/tests/_data/auth_item_child.php';
+    public $tableName = 'auth_item_child';
 }
