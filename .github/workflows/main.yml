@@ -12,4 +12,4 @@ jobs:
       - name: Build polar
         run: bash docker.sh polarup
       - name: Run tests
-        run: docker exec lnpay-php vendor/bin/codecept run
+        run: docker exec lnpay-php vendor/bin/codecept -vvv run
