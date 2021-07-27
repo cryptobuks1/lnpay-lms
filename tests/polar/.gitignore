@@ -1,4 +1,2 @@
-./volumes/bitcoind/backend1/regtest/debug.log
-./volumes/lnd/alice/logs/*
-./volumes/lnd/bob/logs/*
-./volumes/lnd/carol/logs/*
+./volumes/bitcoind/*
+./volumes/lnd/*
