@@ -10,4 +10,4 @@ jobs:
       - name: Build codecept
         run: docker exec lnpay-php vendor/bin/codecept build
       - name: Run tests
-        run: docker exec lnpay-php vendor/bin/codecept run unit
+        run: docker exec lnpay-php vendor/bin/codecept run
