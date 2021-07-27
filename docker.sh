@@ -46,3 +46,10 @@ then
     docker-compose down --volumes
     rm -rf docker/supervisor/conf.d/lnod_*
 fi
+
+if [ $1 == "polarup" ]
+then
+    cd tests/polar;
+    set -e
+    docker-compose up -d
+fi
