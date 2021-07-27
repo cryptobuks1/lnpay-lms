@@ -52,6 +52,7 @@ then
     cd tests/polar;
     set -e
     docker-compose up -d
+    sleep 20
 fi
 
 if [ $1 == "polardown" ]
