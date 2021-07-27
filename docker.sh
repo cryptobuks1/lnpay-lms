@@ -54,7 +54,8 @@ then
     cd tests/polar;
     set -e
     docker-compose up -d
-    sleep 20
+    echo "Waiting 120s for bitcoind and LND to boot..."
+    sleep 120
 fi
 
 if [ $1 == "polardown" ]
