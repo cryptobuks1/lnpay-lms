@@ -53,3 +53,10 @@ then
     set -e
     docker-compose up -d
 fi
+
+if [ $1 == "polardown" ]
+then
+    cd tests/polar;
+    set -e
+    docker-compose down --volumes
+fi
