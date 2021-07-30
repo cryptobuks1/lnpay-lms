@@ -31,8 +31,6 @@ class BaseNodeController extends Controller
                 throw new BadRequestHttpException('Invalid node specified!');
             }
 
-
-
             Yii::$app->getView()->params['breadcrumbs'][] = ['label'=>'LN Nodes','url'=>Yii::$app->controller->module->homeUrl];
             Yii::$app->getView()->params['breadcrumbs'][] = ['label' => $this->nodeObject->alias, 'url' => ['index']];
             $this->module->sidebarView = '@app/modules/node/views/_nav-node.php';

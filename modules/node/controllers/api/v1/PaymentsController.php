@@ -1,6 +1,6 @@
 <?php
 
-namespace app\controllers\v1\node;
+namespace app\modules\node\controllers\api\v1;
 
 use app\behaviors\UserAccessKeyBehavior;
 use app\modules\node\models\LnNode;
@@ -8,7 +8,7 @@ use Yii;
 use yii\web\BadRequestHttpException;
 use yii\web\NotFoundHttpException;
 
-class PaymentsController extends BaseNodeController
+class PaymentsController extends NodeApiController
 {
     public $modelClass = 'app\models\LnTx';
 

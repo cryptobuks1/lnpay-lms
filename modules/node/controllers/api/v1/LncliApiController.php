@@ -1,12 +1,12 @@
 <?php
 
-namespace app\controllers\v1\node;
+namespace app\modules\node\controllers\api\v1;
 
 use app\modules\node\models\LnNode;
 use Yii;
 use yii\web\BadRequestHttpException;
 
-class LncliController extends BaseNodeController
+class LncliApiController extends NodeApiController
 {
     public $modelClass = 'app\modules\node\models\LnNode';
 

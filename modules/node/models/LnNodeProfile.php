@@ -4,7 +4,7 @@ namespace app\modules\node\models;
 
 use app\behaviors\JsonDataBehavior;
 use app\components\HelperComponent;
-use app\components\node\LnMacaroonObject;
+use app\modules\node\components\LnMacaroonObject;
 use app\models\StatusType;
 use LndConnect\LndConnect;
 use Yii;

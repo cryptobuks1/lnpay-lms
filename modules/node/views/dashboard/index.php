@@ -1,9 +1,6 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
-use yii\helpers\HtmlPurifier;
-use yii\helpers\VarDumper;
 
 
 $this->title = 'LN Nodes';

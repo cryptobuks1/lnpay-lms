@@ -4,7 +4,7 @@ namespace app\models;
 
 use app\behaviors\JsonDataBehavior;
 use app\components\HelperComponent;
-use app\components\node\LndNodeConnector;
+use app\modules\node\components\LndNodeConnector;
 use app\models\action\ActionName;
 use app\models\wallet\Wallet;
 use app\models\wallet\WalletTransaction;

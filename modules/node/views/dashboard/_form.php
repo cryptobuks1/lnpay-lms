@@ -7,7 +7,7 @@ use yii\widgets\ActiveForm;
 /* @var $model app\modules\node\models\LnNode */
 /* @var $form yii\widgets\ActiveForm */
 
-$bakeMac = new \app\components\node\LnMacaroonObject();
+$bakeMac = new \app\modules\node\components\LnMacaroonObject();
 $bakeMac->permissions = $model->defaultMacaroonPerms;
 
 ?>

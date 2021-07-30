@@ -5,7 +5,7 @@ $params = require(__DIR__ . '/params.php');
 return [
     'name'=>'LNPAY',
     'bootstrap' => [
-        'queue', // The component registers its own console commands
+        'queue', // The component registers its own console
     ],
     'components' => [
         'cache' => [

@@ -1,5 +1,5 @@
 <?php
-namespace app\components\node;
+namespace app\modules\node\components;
 
 use app\components\HelperComponent;
 use Yii;

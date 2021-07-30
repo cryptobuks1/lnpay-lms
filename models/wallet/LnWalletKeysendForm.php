@@ -2,7 +2,7 @@
 namespace app\models\wallet;
 
 use app\components\HelperComponent;
-use app\components\node\LndNodeConnector;
+use app\modules\node\components\LndNodeConnector;
 use app\exceptions\WalletBusyException;
 use app\models\BalanceWithdraw;
 use app\models\LnTx;

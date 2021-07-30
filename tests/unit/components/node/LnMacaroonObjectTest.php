@@ -4,7 +4,7 @@ namespace tests\unit\components\node;
 
 
 use app\components\HelperComponent;
-use app\components\node\LnMacaroonObject;
+use app\modules\node\components\LnMacaroonObject;
 
 class LnMacaroonObjectTest extends \Codeception\Test\Unit
 {

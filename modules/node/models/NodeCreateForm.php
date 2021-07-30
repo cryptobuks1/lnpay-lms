@@ -2,8 +2,8 @@
 namespace app\modules\node\models;
 
 use app\components\HelperComponent;
-use app\components\node\LndNodeConnector;
-use app\components\node\LnMacaroonObject;
+use app\modules\node\components\LndNodeConnector;
+use app\modules\node\components\LnMacaroonObject;
 use app\models\StatusType;
 use app\modules\node\jobs\AddLndSubnodeJob;
 use yii\base\Exception;

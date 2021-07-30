@@ -9,8 +9,8 @@ namespace app\commands;
 
 use app\components\HelperComponent;
 use app\components\MailerComponent;
-use app\components\node\LndNodeConnector;
-use app\components\node\LnMacaroonObject;
+use app\modules\node\components\LndNodeConnector;
+use app\modules\node\components\LnMacaroonObject;
 use app\models\LnTx;
 use app\models\wallet\LnWalletKeysendForm;
 use app\models\wallet\WalletTransferForm;

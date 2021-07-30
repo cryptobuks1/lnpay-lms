@@ -1,6 +1,6 @@
 <?php
 
-namespace app\controllers\v1\node;
+namespace app\modules\node\controllers\api\v1;
 
 use app\controllers\v1\BaseApiController;
 use app\modules\node\models\LnNode;
@@ -9,7 +9,7 @@ use yii\web\BadRequestHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\UnauthorizedHttpException;
 
-class BaseNodeController extends BaseApiController
+class NodeApiController extends BaseApiController
 {
     public $nodeObject;
 

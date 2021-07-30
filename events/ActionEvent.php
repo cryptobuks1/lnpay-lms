@@ -15,12 +15,6 @@ use app\models\User;
 
 class ActionEvent extends Event
 {
-    //this is also the function name
-    const EVENT_BASE_REGISTER_ACTION = 'baseRegisterAction';
-    const EVENT_PAYWALL_CREATE = 'paywallCreate';
-    const EVENT_PAYWALL_CONVERSION = 'paywallConversion';
-    const EVENT_PAYWALL_VIEW = 'paywallView';
-
     public $_customData = [];
     public $action_id;
 
