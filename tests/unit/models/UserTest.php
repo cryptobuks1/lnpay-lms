@@ -2,11 +2,11 @@
 
 namespace tests\unit\models;
 
-use app\models\action\ActionFeed;
-use app\models\action\ActionName;
-use app\models\User;
-use app\tests\fixtures\UserAccessKeyFixture;
-use app\tests\fixtures\UserFixture;
+use lnpay\core\models\action\ActionFeed;
+use lnpay\core\models\action\ActionName;
+use lnpay\core\models\User;
+use lnpay\fixtures\UserAccessKeyFixture;
+use lnpay\fixtures\UserFixture;
 
 class UserTest extends \Codeception\Test\Unit
 {

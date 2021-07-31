@@ -92,7 +92,9 @@
     ],
     "autoload": {
         "psr-4": {
-            "\\LndConnect\\LndConnect\\": "../php-lndconnect/src/"
+            "lnpay\\core\\": "src/core",
+            "lnpay\\node\\": "src/node",
+            "lnpay\\fixtures\\": "tests/fixtures"
         }
     }
 }

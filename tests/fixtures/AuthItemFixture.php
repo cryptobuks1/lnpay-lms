@@ -1,6 +1,6 @@
 <?php
 
-namespace app\tests\fixtures;
+namespace lnpay\fixtures;
 
 use yii\db\ActiveRecord;
 use yii\test\ActiveFixture;

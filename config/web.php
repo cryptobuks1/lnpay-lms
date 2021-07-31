@@ -2,7 +2,7 @@
 
 $config = [
     'id' => 'basic',
-    'basePath' => dirname(__DIR__),
+    'basePath' => dirname(__DIR__).'/src/core/',
     'bootstrap' => [
         'log',
         'monitor',
@@ -21,7 +21,7 @@ $config = [
             'canExecStop'=>true
         ],
         'node' => [
-            'class' => app\modules\node\Module::class
+            'class' => lnpay\node\Module::class
         ],
     ],
     'components' => [
@@ -40,7 +40,7 @@ $config = [
             'class' => 'yii\web\DbSession',
         ],
         'user' => [
-            'identityClass' => 'app\models\User',
+            'identityClass' => 'lnpay\core\models\User',
             'enableAutoLogin' => true,
             'loginUrl'=>['/home/login'],
             'as mfa' => [
@@ -55,12 +55,12 @@ $config = [
         'log' => [
             'targets' => [
                 [
-                    'class' => 'app\components\ApiLogTarget',
+                    'class' => 'lnpay\core\components\ApiLogTarget',
                 ],
             ],
         ],
         'urlManager' => [
-            'class'=>'app\components\LNPayUrlManager',
+            'class'=>'lnpay\core\components\LNPayUrlManager',
             'enablePrettyUrl' => true,
             'enableStrictParsing' => false,
             'showScriptName' => false,
@@ -103,7 +103,7 @@ $config = [
             ],
         ],
         'request' => [
-            'class'=>'app\components\LNPayRequestComponent',
+            'class'=>'lnpay\core\components\LNPayRequestComponent',
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => getenv('YII_COOKIE_VALIDATION_KEY'),
             'parsers' => [
@@ -114,7 +114,7 @@ $config = [
             'translations' => [
                 '*' => [
                     'class' => 'yii\i18n\PhpMessageSource',
-                    'basePath' => '@app/messages', // if advanced application, set @frontend/messages
+                    'basePath' => '@app/core/messages', // if advanced application, set @frontend/messages
                     'sourceLanguage' => 'en',
                     'fileMap' => [
                         //'main' => 'main.php',

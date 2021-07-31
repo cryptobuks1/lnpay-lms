@@ -2,13 +2,13 @@
 
 namespace tests\unit\models;
 
-use app\behaviors\UserAccessKeyBehavior;
-use app\models\wallet\LnWalletWithdrawForm;
-use app\models\wallet\Wallet;
-use app\models\StatusType;
-use app\models\User;
-use app\models\wallet\WalletTransaction;
-use app\modules\node\models\LnNode;
+use lnpay\core\behaviors\UserAccessKeyBehavior;
+use lnpay\core\models\wallet\LnWalletWithdrawForm;
+use lnpay\core\models\wallet\Wallet;
+use lnpay\core\models\StatusType;
+use lnpay\core\models\User;
+use lnpay\core\models\wallet\WalletTransaction;
+use lnpay\node\models\LnNode;
 use Yii;
 
 class WalletTransactionTest extends \Codeception\Test\Unit

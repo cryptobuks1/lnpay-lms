@@ -2,16 +2,16 @@
 
 namespace tests\unit\models;
 
-use app\behaviors\UserAccessKeyBehavior;
-use app\components\HelperComponent;
-use app\models\LnTx;
-use app\models\wallet\LnWalletKeysendForm;
-use app\models\wallet\LnWalletWithdrawForm;
-use app\modules\node\models\LnNode;
-use app\modules\node\models\NodeListener;
-use app\models\wallet\Wallet;
-use app\models\StatusType;
-use app\models\User;
+use lnpay\core\behaviors\UserAccessKeyBehavior;
+use lnpay\core\components\HelperComponent;
+use lnpay\core\models\LnTx;
+use lnpay\core\models\wallet\LnWalletKeysendForm;
+use lnpay\core\models\wallet\LnWalletWithdrawForm;
+use lnpay\node\models\LnNode;
+use lnpay\node\models\NodeListener;
+use lnpay\core\models\wallet\Wallet;
+use lnpay\core\models\StatusType;
+use lnpay\core\models\User;
 use Yii;
 
 class LnNodeWalletTest extends \Codeception\Test\Unit
@@ -61,7 +61,7 @@ class LnNodeWalletTest extends \Codeception\Test\Unit
         expect_that($model = new LnWalletWithdrawForm());
         expect_that($model->wallet_id = 1111);
         expect_that($model->payment_request = $result->payment_request);
-        expect($model->processWithdrawal())->isInstanceOf('app\models\wallet\WalletTransaction');
+        expect($model->processWithdrawal())->isInstanceOf('lnpay\core\models\wallet\WalletTransaction');
         $model->walletObject->releaseMutex();
         expect($model->walletObject->balance)->equals($bobBalance-69);
 

@@ -7,6 +7,14 @@ return [
     'bootstrap' => [
         'queue', // The component registers its own console
     ],
+    'aliases'=> [
+        '@app'=> dirname(__DIR__),
+        '@app/core'=> dirname(__DIR__).'/src/core/',
+        '@app/node'=> dirname(__DIR__).'/src/node/',
+        '@vendor'=> dirname(__DIR__).'/vendor',
+    ],
+    'controllerNamespace' => 'lnpay\\core\\controllers',
+    'runtimePath' => dirname(__FILE__) . '/../runtime',
     'components' => [
         'cache' => [
             'class' => \yii\redis\Cache::class,
@@ -99,7 +107,7 @@ return [
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
-            'viewPath' => '@app/mail',
+            'viewPath' => '@app/core/mail',
             'transport' => [
                 'class' => 'Swift_SmtpTransport',
                 'host' => getenv('DEFAULT_EMAIL_HOST'),

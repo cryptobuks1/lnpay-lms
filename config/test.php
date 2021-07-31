@@ -2,16 +2,22 @@
 
 $config = [
     'id' => 'basic',
-    'basePath' => dirname(__DIR__),
+    'basePath' => dirname(__DIR__).'/src/core/',
     'bootstrap' => [
         'log',
         'monitor',
         'node'
     ],
-    'aliases' => [
+    'aliases'=> [
+        '@app'=> dirname(__DIR__),
+        '@app/core'=> dirname(__DIR__).'/src/core/',
+        '@app/node'=> dirname(__DIR__).'/src/node/',
+        '@vendor'=> dirname(__DIR__).'/vendor',
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
     ],
+    'controllerNamespace' => 'lnpay\\core\\controllers',
+    'runtimePath' => dirname(__FILE__) . '/../runtime',
     'defaultRoute'=>'home',
     'modules'=>[
         'monitor' => [
@@ -21,7 +27,7 @@ $config = [
             'canExecStop'=>true
         ],
         'node' => [
-            'class' => app\modules\node\Module::class
+            'class' => lnpay\node\Module::class
         ],
     ],
     'controllerMap'=>[
@@ -61,7 +67,7 @@ $config = [
             'class' => 'yii\mutex\FileMutex'
         ],
         'user' => [
-            'identityClass' => 'app\models\User',
+            'identityClass' => 'lnpay\core\models\User',
             'enableAutoLogin' => true,
             'loginUrl'=>['/home/login'],
         ],
@@ -69,7 +75,7 @@ $config = [
             'errorAction' => 'home/error',
         ],
         'urlManager' => [
-            'class'=>'app\components\LNPayUrlManager',
+            'class'=>'lnpay\core\components\LNPayUrlManager',
             'enablePrettyUrl' => true,
             'enableStrictParsing' => false,
             'showScriptName' => true,
@@ -134,13 +140,13 @@ $config = [
                     ]
                 ],
                 [
-                    'class' => 'app\components\ApiLogTarget',
+                    'class' => 'lnpay\core\components\ApiLogTarget',
                 ],
             ],
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
-            'viewPath' => '@app/mail',
+            'viewPath' => '@app/core/mail',
             'transport' => [
                 'class' => 'Swift_SmtpTransport',
                 'host' => getenv('DEFAULT_EMAIL_HOST'),
