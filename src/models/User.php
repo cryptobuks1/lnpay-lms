@@ -265,7 +265,7 @@ class User extends ActiveRecord implements IdentityInterface,\vxm\mfa\IdentityIn
      */
     public function validatePassword($password)
     {
-        return Yii::$app->security->validatePassword($password, $this->password_hash);
+        return \LNPay::$app->security->validatePassword($password, $this->password_hash);
     }
 
     /**
@@ -275,7 +275,7 @@ class User extends ActiveRecord implements IdentityInterface,\vxm\mfa\IdentityIn
      */
     public function setPassword($password)
     {
-        $this->password_hash = Yii::$app->security->generatePasswordHash($password);
+        $this->password_hash = \LNPay::$app->security->generatePasswordHash($password);
     }
 
     /**
@@ -283,7 +283,7 @@ class User extends ActiveRecord implements IdentityInterface,\vxm\mfa\IdentityIn
      */
     public function generateAuthKey()
     {
-        $this->auth_key = Yii::$app->security->generateRandomString();
+        $this->auth_key = \LNPay::$app->security->generateRandomString();
     }
 
     /**
@@ -291,7 +291,7 @@ class User extends ActiveRecord implements IdentityInterface,\vxm\mfa\IdentityIn
      */
     public function generatePasswordResetToken()
     {
-        $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
+        $this->password_reset_token = \LNPay::$app->security->generateRandomString() . '_' . time();
     }
 
     /**
@@ -465,7 +465,7 @@ class User extends ActiveRecord implements IdentityInterface,\vxm\mfa\IdentityIn
     public function setTimeZone($tz)
     {
         $this->tz = $tz;
-        Yii::$app->session->set('tz',$tz);
+        \LNPay::$app->session->set('tz',$tz);
         return $this->save();
     }
 
@@ -538,7 +538,7 @@ class User extends ActiveRecord implements IdentityInterface,\vxm\mfa\IdentityIn
         $a['ln_inbound_volume'] = 0;
         $a['ln_outbound_volume'] = 0;
 
-        $a['ln_inbound_volume'] = (Yii::$app->db->createCommand('
+        $a['ln_inbound_volume'] = (\LNPay::$app->db->createCommand('
             SELECT SUM(ABS(num_satoshis)) 
             FROM wallet_transaction 
             WHERE wallet_transaction.created_at > :startTime 
@@ -548,10 +548,10 @@ class User extends ActiveRecord implements IdentityInterface,\vxm\mfa\IdentityIn
             ->bindValue(':wtx_type_ids',WalletTransactionType::LN_DEPOSIT)
             ->bindValue(':startTime',$periodStart)
             ->bindValue(':endTime',$periodEnd)
-            ->bindValue(':user_id',Yii::$app->user->id)
+            ->bindValue(':user_id',\LNPay::$app->user->id)
             ->queryScalar()?:0);
 
-        $a['ln_outbound_volume'] = (Yii::$app->db->createCommand('
+        $a['ln_outbound_volume'] = (\LNPay::$app->db->createCommand('
             SELECT SUM(ABS(num_satoshis)) 
             FROM wallet_transaction 
             WHERE wallet_transaction.created_at > :startTime 
@@ -561,7 +561,7 @@ class User extends ActiveRecord implements IdentityInterface,\vxm\mfa\IdentityIn
             ->bindValue(':wtx_type_ids',WalletTransactionType::LN_WITHDRAWAL)
             ->bindValue(':startTime',$periodStart)
             ->bindValue(':endTime',$periodEnd)
-            ->bindValue(':user_id',Yii::$app->user->id)
+            ->bindValue(':user_id',\LNPay::$app->user->id)
             ->queryScalar()?:0);
 
         return $a;
@@ -590,8 +590,8 @@ class User extends ActiveRecord implements IdentityInterface,\vxm\mfa\IdentityIn
             $this->save();
         }
 
-        if (\Yii::$app instanceof \yii\web\Application) {
-            return Yii::$app->request->getHeaders()->get('LNPay-Version') ?? $this->api_version;
+        if (\LNPay::$app instanceof \yii\web\Application) {
+            return \LNPay::$app->request->getHeaders()->get('LNPay-Version') ?? $this->api_version;
         } else
             return $this->api_version;
 

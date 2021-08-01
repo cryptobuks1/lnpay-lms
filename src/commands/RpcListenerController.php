@@ -35,7 +35,7 @@ class RpcListenerController extends Controller
             $actionName->name=>$rpcData
         ];
 
-        $job = Yii::$app->queue->priority(100)->push(new ProcessLndResponseJob([
+        $job = \LNPay::$app->queue->priority(100)->push(new ProcessLndResponseJob([
             'responseObject' => $rpcData,
             'nodeObject' => $nodeObject->toArray(),
             'actionObject'=>$actionName->toArray()

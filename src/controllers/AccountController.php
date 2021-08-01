@@ -32,27 +32,27 @@ class AccountController extends Controller
     public function actionIndex()
     {
         $model = new ChangePasswordForm();
-        $userModel = \lnpay\models\User::findOne(Yii::$app->user->id);
+        $userModel = \lnpay\models\User::findOne(\LNPay::$app->user->id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+        if ($model->load(\LNPay::$app->request->post()) && $model->validate()) {
             try {
-                $postData = Yii::$app->request->post();
+                $postData = \LNPay::$app->request->post();
                 $userModel->setPassword($postData['ChangePasswordForm']['newPassword']);
                 if ($userModel->save()) {
-                    Yii::$app->getSession()->setFlash(
+                    \LNPay::$app->getSession()->setFlash(
                         'success',
                         'Password changed'
                     );
                     return $this->redirect(['index']);
                 } else {
-                    Yii::$app->getSession()->setFlash(
+                    \LNPay::$app->getSession()->setFlash(
                         'error',
                         'Password not changed'
                     );
                     return $this->redirect(['index']);
                 }
             } catch (Exception $e) {
-                Yii::$app->getSession()->setFlash(
+                \LNPay::$app->getSession()->setFlash(
                     'error',
                     (string)($e->getMessage())
                 );

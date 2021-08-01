@@ -8,15 +8,15 @@ use Yii;
  * in the sequence they were assigned using setFlash. You can set message as following:
  *
  * ```php
- * Yii::$app->session->setFlash('error', 'This is the message');
- * Yii::$app->session->setFlash('success', 'This is the message');
- * Yii::$app->session->setFlash('info', 'This is the message');
+ * \LNPay::$app->session->setFlash('error', 'This is the message');
+ * \LNPay::$app->session->setFlash('success', 'This is the message');
+ * \LNPay::$app->session->setFlash('info', 'This is the message');
  * ```
  *
  * Multiple messages could be set as follows:
  *
  * ```php
- * Yii::$app->session->setFlash('error', ['Error 1', 'Error 2']);
+ * \LNPay::$app->session->setFlash('error', ['Error 1', 'Error 2']);
  * ```
  *
  * @author Kartik Visweswaran <kartikv2@gmail.com>
@@ -49,7 +49,7 @@ class Alert extends \yii\bootstrap\Widget
      */
     public function run()
     {
-        $session = Yii::$app->session;
+        $session = \LNPay::$app->session;
         $flashes = $session->getAllFlashes();
         $appendClass = isset($this->options['class']) ? ' ' . $this->options['class'] : '';
 

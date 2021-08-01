@@ -47,7 +47,7 @@ class LntxController extends BaseApiController
     public function actionView($id)
     {
         $modelClass = $this->modelClass;
-        if ($lntx = $modelClass::find()->where(['external_hash'=>$id,'user_id'=>Yii::$app->user->id])->one()) {
+        if ($lntx = $modelClass::find()->where(['external_hash'=>$id,'user_id'=>\LNPay::$app->user->id])->one()) {
             return $lntx;
         } else {
             throw new UnauthorizedHttpException('LnTx not found');

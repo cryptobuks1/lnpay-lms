@@ -230,7 +230,7 @@ class ActionComponent extends Component
             //Construct payload
             $iwhr = IntegrationWebhookRequest::prepareRequest($IW,$actionFeedObject);
 
-            Yii::$app->queue->priority(150)->push(new IntegrationWebhookRequestJob([
+            \LNPay::$app->queue->priority(150)->push(new IntegrationWebhookRequestJob([
                 'iwhr_id' => $iwhr->id
             ]));
         }

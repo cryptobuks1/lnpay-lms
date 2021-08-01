@@ -48,7 +48,7 @@ class UserController extends BaseApiController
      */
     public function actionView()
     {
-        return User::findOne(Yii::$app->user->id);
+        return User::findOne(\LNPay::$app->user->id);
     }
 
     /**
@@ -68,13 +68,13 @@ class UserController extends BaseApiController
         $model = new SignupForm();
         $model->scenario = $model::SCENARIO_API_SIGNUP;
 
-        $model->load(Yii::$app->getRequest()->getBodyParams(), '');
+        $model->load(\LNPay::$app->getRequest()->getBodyParams(), '');
         if (!$model->email)
             $model->email = $model->username;
-        $model->api_parent_id = Yii::$app->user->id;
+        $model->api_parent_id = \LNPay::$app->user->id;
 
         if ($model->validate() && $user = $model->signup()) {
-            $response = Yii::$app->getResponse();
+            $response = \LNPay::$app->getResponse();
             $response->setStatusCode(201);
 
             return User::findOne($user->id);

@@ -62,14 +62,14 @@ class DashboardController extends BaseDashController
     public function beforeAction($event)
     {
         if (parent::beforeAction($event)) {
-            if (Yii::$app->user->isGuest) {
-                Yii::$app->session->setFlash('error','You must be logged in to access that!');
+            if (\LNPay::$app->user->isGuest) {
+                \LNPay::$app->session->setFlash('error','You must be logged in to access that!');
                 return $this->redirect('/home/index')->send();
             }
 
-            if (Yii::$app->user->id)
+            if (\LNPay::$app->user->id)
             {
-                $this->user = User::findOne(Yii::$app->user->id);
+                $this->user = User::findOne(\LNPay::$app->user->id);
 
                 return TRUE;
             }
@@ -95,7 +95,7 @@ class DashboardController extends BaseDashController
      */
     public function actionEvents()
     {
-        $actionFeedQuery = ActionFeed::find()->where(['user_id'=>Yii::$app->user->id])->joinWith('actionName');
+        $actionFeedQuery = ActionFeed::find()->where(['user_id'=>\LNPay::$app->user->id])->joinWith('actionName');
 
         $afDp = new \yii\data\ActiveDataProvider([
             'query' => $actionFeedQuery,

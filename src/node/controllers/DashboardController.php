@@ -44,7 +44,7 @@ class DashboardController extends Controller
     protected function findModel($id)
     {
         if (($model = LnNode::findOne($id)) !== null) {
-            if ($model->user_id == Yii::$app->user->id)
+            if ($model->user_id == \LNPay::$app->user->id)
                 return $model;
         }
 
@@ -59,7 +59,7 @@ class DashboardController extends Controller
      */
     public function actionIndex()
     {
-        $nodes = Yii::$app->user->identity->getLnNodeQuery();
+        $nodes = \LNPay::$app->user->identity->getLnNodeQuery();
 
         $nodeDp = new \yii\data\ActiveDataProvider([
             'query' => $nodes,
@@ -104,7 +104,7 @@ class DashboardController extends Controller
         $model = new NodeAddForm();
         $submittedMacaroonObject = null;
 
-        if ($model->load(Yii::$app->request->post())) {
+        if ($model->load(\LNPay::$app->request->post())) {
             if ($model->validate()) {
                 $submittedMacaroonObject = $model->submittedMacaroonObject;
 
@@ -134,16 +134,16 @@ class DashboardController extends Controller
     {
         $model = new NodeCreateForm();
 
-        if (YII_ENV_PROD && Yii::$app->user->identity->getLnNodeQuery()->count() > 2) {
-            Yii::$app->session->setFlash('error','Maxing out at 3 nodes per user for now');
-            return $this->redirect(Yii::$app->request->referrer);
+        if (YII_ENV_PROD && \LNPay::$app->user->identity->getLnNodeQuery()->count() > 2) {
+            \LNPay::$app->session->setFlash('error','Maxing out at 3 nodes per user for now');
+            return $this->redirect(\LNPay::$app->request->referrer);
         }
 
-        if ($model->load(Yii::$app->request->post())) {
+        if ($model->load(\LNPay::$app->request->post())) {
             if ($model->validate()) {
                 if ($node = $model->createNode()) {
-                    Yii::$app->session->setFlash('new_node_details',$node);
-                    Yii::$app->session->setFlash('success','Node: '.$node['node_id'].' is launching!');
+                    \LNPay::$app->session->setFlash('new_node_details',$node);
+                    \LNPay::$app->session->setFlash('success','Node: '.$node['node_id'].' is launching!');
                     return $this->redirect(['/node/dashboard/index']);
                 } else {
                     $model = $node;
@@ -167,7 +167,7 @@ class DashboardController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(\LNPay::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 

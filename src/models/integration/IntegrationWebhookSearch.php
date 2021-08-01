@@ -42,7 +42,7 @@ class IntegrationWebhookSearch extends IntegrationWebhook
     public function search($params)
     {
         $query = IntegrationWebhook::find();
-        $query->where(['user_id'=>Yii::$app->user->id]);
+        $query->where(['user_id'=>\LNPay::$app->user->id]);
 
         // add conditions that should always apply here
 

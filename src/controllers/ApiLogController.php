@@ -37,7 +37,7 @@ class ApiLogController extends BaseDashController
     {
         $searchModel = new UserApiLogSearch();
         $searchModel->method = 'POST';
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(\LNPay::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -67,7 +67,7 @@ class ApiLogController extends BaseDashController
      */
     protected function findModel($id)
     {
-        if (($model = UserApiLog::find()->where(['id'=>$id,'user_id'=>Yii::$app->user->id])->one()) !== null) {
+        if (($model = UserApiLog::find()->where(['id'=>$id,'user_id'=>\LNPay::$app->user->id])->one()) !== null) {
             return $model;
         }
 

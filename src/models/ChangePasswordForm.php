@@ -48,7 +48,7 @@ class ChangePasswordForm extends \yii\base\Model
      */
     public function findPasswords($attribute, $params): void
     {
-        $user = User::findOne(Yii::$app->user->id);
+        $user = User::findOne(\LNPay::$app->user->id);
         if (!$user->validatePassword($this->currentPassword)) {
             $this->addError($attribute, 'Current password is incorrect.');
         }

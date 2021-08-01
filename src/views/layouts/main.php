@@ -15,9 +15,9 @@ PaywallAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
-<html lang="<?= Yii::$app->language ?>">
+<html lang="<?= \LNPay::$app->language ?>">
 <head>
-    <meta charset="<?= Yii::$app->charset ?>">
+    <meta charset="<?= \LNPay::$app->charset ?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
@@ -30,8 +30,8 @@ PaywallAsset::register($this);
 <?php $this->beginBody() ?>
 
 <?php
-    $controller = Yii::$app->controller;
-    $default_controller = Yii::$app->defaultRoute;
+    $controller = \LNPay::$app->controller;
+    $default_controller = \LNPay::$app->defaultRoute;
     $externalActions = ['paywalls','index','feed'];
     $isHome = (($controller->id === $default_controller) && (in_array($controller->action->id,$externalActions))) ? true : false;
 
@@ -41,8 +41,8 @@ PaywallAsset::register($this);
 <div class="wrap">
     <?php
         NavBar::begin([
-            'brandLabel' => '⚡'.Yii::$app->name,
-            'brandUrl' => (Yii::$app->user->isGuest?Yii::$app->homeUrl:'/dashboard/home'),
+            'brandLabel' => '⚡'.\LNPay::$app->name,
+            'brandUrl' => (\LNPay::$app->user->isGuest?\LNPay::$app->homeUrl:'/dashboard/home'),
             'options' => [
                 'class' => '' . $navclass,
             ],
@@ -50,30 +50,30 @@ PaywallAsset::register($this);
     $menuItemsLeft = [
         [
             'label' => '<img src="/img/icons/wallet.svg" style="width:15px" /> Wallets',
-            'url' => (Yii::$app->user->isGuest?'#':['/wallet/dashboard']),
-            'active'=>stripos(Yii::$app->request->pathInfo,'wallet')!==FALSE,
+            'url' => (\LNPay::$app->user->isGuest?'#':['/wallet/dashboard']),
+            'active'=>stripos(\LNPay::$app->request->pathInfo,'wallet')!==FALSE,
             'encode'=>false,
         ],
         [
             'label' => '<img src="/img/icons/nodes.svg" style="width:15px" /> LN Nodes',
-            'url' => (Yii::$app->user->isGuest?'#':['/node/dashboard/index']),
-            'active'=>\lnpay\components\HelperComponent::str_contains(Yii::$app->request->pathInfo,['node/']),
+            'url' => (\LNPay::$app->user->isGuest?'#':['/node/dashboard/index']),
+            'active'=>\lnpay\components\HelperComponent::str_contains(\LNPay::$app->request->pathInfo,['node/']),
             'encode'=>false,
         ],
         [
             'label' => '<img src="/img/icons/flowchart.svg" style="width:15px" /> Developers',
-            'url' => (Yii::$app->user->isGuest?'#':['/developers/dashboard']),
-            'active'=>\lnpay\components\HelperComponent::str_contains(Yii::$app->request->pathInfo,['developers','webhook']),
+            'url' => (\LNPay::$app->user->isGuest?'#':['/developers/dashboard']),
+            'active'=>\lnpay\components\HelperComponent::str_contains(\LNPay::$app->request->pathInfo,['developers','webhook']),
             'encode'=>false,
         ],
     ];
-    if (Yii::$app->user->isGuest) {
+    if (\LNPay::$app->user->isGuest) {
         $menuItemsRight[] = ['label' => 'Login', 'url' => ['/home/login']];
         $menuItemsRight[] = ['label' => 'Get Started', 'class' => 'btn-outline-success', 'url' => ['/home/signup']];
     } else {
         $menuItemsRight = [
 
-            ['label' => Yii::$app->user->identity->email, 'url' => '/account/index'],
+            ['label' => \LNPay::$app->user->identity->email, 'url' => '/account/index'],
             '<li class="nav-item dropdown">'
             . '<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="padding: 12px">'
             . '<img src="/img/icons/settings.svg" style="height: 25px;"/>'
@@ -122,10 +122,10 @@ PaywallAsset::register($this);
         ]) ?>
 
             <?php
-                if (stripos(Yii::$app->controller->module->id,"basic") === false)
-                    $this->beginContent(Yii::$app->controller->module->sidebarView);?>
+                if (stripos(\LNPay::$app->controller->module->id,"basic") === false)
+                    $this->beginContent(\LNPay::$app->controller->module->sidebarView);?>
                 <?= $content ?>
-            <?php if (stripos(Yii::$app->controller->module->id,"basic") === false)
+            <?php if (stripos(\LNPay::$app->controller->module->id,"basic") === false)
                     $this->endContent(); ?>
         </div>
     </div>

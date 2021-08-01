@@ -41,16 +41,16 @@ class WalletTransactionController extends BaseApiController
     public function actionViewAll($wallet_id=NULL)
     {
         $searchModel = new WalletTransactionSearch();
-        $searchModel->user_id = Yii::$app->user->id;
+        $searchModel->user_id = \LNPay::$app->user->id;
 
         if ($wallet_id) {
             $wal = Wallet::findById($wallet_id);
-            if (!$wal || ($wal->user_id != Yii::$app->user->id)) {
+            if (!$wal || ($wal->user_id != \LNPay::$app->user->id)) {
                 throw new UnauthorizedHttpException('Wallet not found');
             }
             $searchModel->wallet_id = $wal->id;
         }
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(\LNPay::$app->request->queryParams);
         $dataProvider->pagination->defaultPageSize = 20;
 
         return $dataProvider;

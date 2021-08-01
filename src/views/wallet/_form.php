@@ -7,7 +7,7 @@ use yii\widgets\ActiveForm;
 /* @var $model lnpay\models\wallet\Wallet */
 /* @var $form yii\widgets\ActiveForm */
 
-$user = Yii::$app->user->identity;
+$user = \LNPay::$app->user->identity;
 ?>
 
 <div class="wallet-form">

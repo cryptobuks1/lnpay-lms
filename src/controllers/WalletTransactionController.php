@@ -37,8 +37,8 @@ class WalletTransactionController extends BaseDashController
     public function actionIndex()
     {
         $searchModel = new WalletTransactionSearch();
-        $searchModel->user_id = Yii::$app->user->id;
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $searchModel->user_id = \LNPay::$app->user->id;
+        $dataProvider = $searchModel->search(\LNPay::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -68,7 +68,7 @@ class WalletTransactionController extends BaseDashController
     {
         $model = new WalletTransaction();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(\LNPay::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -88,7 +88,7 @@ class WalletTransactionController extends BaseDashController
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(\LNPay::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 

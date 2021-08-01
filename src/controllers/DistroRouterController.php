@@ -32,7 +32,7 @@ class DistroRouterController extends Controller
 
     public function actionSplice($short_url,$distro_name='web')
     {
-        $this->_passThruParams = Yii::$app->request->getQueryParams();
+        $this->_passThruParams = \LNPay::$app->request->getQueryParams();
 
         //Don't include referrals from our own sites
         $bl = BaseLink::find()->where(['short_url'=>$short_url])->one();
@@ -77,7 +77,7 @@ class DistroRouterController extends Controller
         $qrImage = (new QRCode($options));
         $qrOutputInterface = new QRImageWithText($options, $qrImage->getMatrix($str));
 
-        $response = Yii::$app->getResponse();
+        $response = \LNPay::$app->getResponse();
         $response->headers->set('Content-Type', 'image/png');
         $response->headers->set("Pragma-directive: no-cache");
         $response->headers->set("Cache-directive: no-cache");
@@ -85,7 +85,7 @@ class DistroRouterController extends Controller
         $response->headers->set("Pragma: no-cache");
         $response->headers->set("Expires: 0");
         $response->format = Response::FORMAT_RAW;
-        $response->data = $qrOutputInterface->dump(null, Yii::$app->name.$append.' '.$a);
+        $response->data = $qrOutputInterface->dump(null, \LNPay::$app->name.$append.' '.$a);
         return $response->send();
     }
 

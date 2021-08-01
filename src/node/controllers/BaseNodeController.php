@@ -19,20 +19,20 @@ class BaseNodeController extends Controller
     public function beforeAction($event)
     {
         if (parent::beforeAction($event)) {
-            if ( ($this->id == 'ln') && ($model = LnNode::findOne(Yii::$app->request->getQueryParam('id'))) !== null) {
-                Yii::$app->session->set('ln_node_id',$model->id);
+            if ( ($this->id == 'ln') && ($model = LnNode::findOne(\LNPay::$app->request->getQueryParam('id'))) !== null) {
+                \LNPay::$app->session->set('ln_node_id',$model->id);
                 $this->nodeObject = $model;
-            } else if ($node_id = Yii::$app->session->get('ln_node_id')) {
+            } else if ($node_id = \LNPay::$app->session->get('ln_node_id')) {
                 $this->nodeObject = LnNode::findOne($node_id);
             }
 
-            if (@$this->nodeObject->user_id != Yii::$app->user->id) {
-                Yii::$app->session->remove('ln_node_id');
+            if (@$this->nodeObject->user_id != \LNPay::$app->user->id) {
+                \LNPay::$app->session->remove('ln_node_id');
                 throw new BadRequestHttpException('Invalid node specified!');
             }
 
-            Yii::$app->getView()->params['breadcrumbs'][] = ['label'=>'LN Nodes','url'=>Yii::$app->controller->module->homeUrl];
-            Yii::$app->getView()->params['breadcrumbs'][] = ['label' => $this->nodeObject->alias, 'url' => ['index']];
+            \LNPay::$app->getView()->params['breadcrumbs'][] = ['label'=>'LN Nodes','url'=>\LNPay::$app->controller->module->homeUrl];
+            \LNPay::$app->getView()->params['breadcrumbs'][] = ['label' => $this->nodeObject->alias, 'url' => ['index']];
             $this->module->sidebarView = '@app/node/views/_nav-node.php';
 
             return true;

@@ -54,23 +54,23 @@ class WalletController extends BaseApiController
     {
         $modelClass = $this->modelClass;
 
-        $apiKey = @Yii::$app->user->identity->sessionApiKey;
+        $apiKey = @\LNPay::$app->user->identity->sessionApiKey;
 
         //If SAK is used, all wallet keys are valid
         if (UserAccessKeyBehavior::checkKeyAccess(UserAccessKeyBehavior::ROLE_SECRET_API_KEY,$apiKey)) {
             $wallet = $modelClass::findById($access_key) ?? $modelClass::findByKey($access_key) ?? NULL;
             if ($wallet) {
-                if ($wallet->user_id == Yii::$app->user->id) { //make sure this is the right user
+                if ($wallet->user_id == \LNPay::$app->user->id) { //make sure this is the right user
                     return $wallet;
                 }
             }
 
         }
         //public access key
-        else if (UserAccessKeyBehavior::checkKeyAccess(UserAccessKeyBehavior::ROLE_PUBLIC_API_KEY,@Yii::$app->user->identity->sessionApiKey)) {
+        else if (UserAccessKeyBehavior::checkKeyAccess(UserAccessKeyBehavior::ROLE_PUBLIC_API_KEY,@\LNPay::$app->user->identity->sessionApiKey)) {
             $wallet = $modelClass::findByKey($access_key);
             if ($wallet) {
-                if (Yii::$app->user->id == $wallet->user_id) {
+                if (\LNPay::$app->user->id == $wallet->user_id) {
                     return $wallet;
                 }
             }
@@ -83,7 +83,7 @@ class WalletController extends BaseApiController
             }
         }
 
-        if (UserAccessKeyBehavior::checkKeyAccess(UserAccessKeyBehavior::ROLE_PUBLIC_API_KEY,@Yii::$app->user->identity->sessionApiKey)) {
+        if (UserAccessKeyBehavior::checkKeyAccess(UserAccessKeyBehavior::ROLE_PUBLIC_API_KEY,@\LNPay::$app->user->identity->sessionApiKey)) {
             throw new UnauthorizedHttpException('Invalid Wallet Access Key. Keys prefixed with waka_, waki_, wakr, waklw are valid when using pak_');
         }
         throw new UnauthorizedHttpException('Wallet not found: '.$access_key);
@@ -92,9 +92,9 @@ class WalletController extends BaseApiController
     public function checkAccessKey($item,$access_key=NULL)
     {
         if (!$access_key) //assuming it's a wallet access key if it's in the URL
-            $access_key = Yii::$app->request->getQueryParam('access_key');
+            $access_key = \LNPay::$app->request->getQueryParam('access_key');
 
-        if (UserAccessKeyBehavior::checkKeyAccess(UserAccessKeyBehavior::ROLE_SECRET_API_KEY,@Yii::$app->user->identity->sessionApiKey)) {
+        if (UserAccessKeyBehavior::checkKeyAccess(UserAccessKeyBehavior::ROLE_SECRET_API_KEY,@\LNPay::$app->user->identity->sessionApiKey)) {
             return true;
         } else if (UserAccessKeyBehavior::checkKeyAccess(UserAccessKeyBehavior::ROLE_KEY_SUSPENDED,$access_key)) {
             throw new UnauthorizedHttpException('Key has been suspended');
@@ -109,11 +109,11 @@ class WalletController extends BaseApiController
     {
         $model = new Wallet();
 
-        $model->load(Yii::$app->getRequest()->getBodyParams(), '');
-        $model->user_id = Yii::$app->user->id;
+        $model->load(\LNPay::$app->getRequest()->getBodyParams(), '');
+        $model->user_id = \LNPay::$app->user->id;
 
         if ($model->save()) {
-            $response = Yii::$app->getResponse();
+            $response = \LNPay::$app->getResponse();
             $response->setStatusCode(201);
 
             $wallet = Wallet::findOne($model->id);
@@ -143,7 +143,7 @@ class WalletController extends BaseApiController
     {
         $modelClass = $this->modelClass;
         return new \yii\data\ActiveDataProvider([
-            'query' => $modelClass::find()->where(['user_id'=>Yii::$app->user->id]),
+            'query' => $modelClass::find()->where(['user_id'=>\LNPay::$app->user->id]),
             'pagination' => [
                 'defaultPageSize' => 100,
             ],
@@ -159,12 +159,12 @@ class WalletController extends BaseApiController
     {
         $wallet = $this->findByKey($access_key);
         $model = new LnWalletWithdrawForm();
-        $model->load(Yii::$app->getRequest()->getBodyParams(), '');
+        $model->load(\LNPay::$app->getRequest()->getBodyParams(), '');
         $model->wallet_id = $wallet->id;
-        Yii::$app->getRequest()->getBodyParam('passThru',[]);
+        \LNPay::$app->getRequest()->getBodyParam('passThru',[]);
 
         $array = [];
-        if ($passThru = Yii::$app->request->getBodyParam('passThru')) {
+        if ($passThru = \LNPay::$app->request->getBodyParam('passThru')) {
             if (is_array($passThru)) {
                 $array = $passThru;
             } else {
@@ -181,18 +181,18 @@ class WalletController extends BaseApiController
         $this->checkAccessKey(UserAccessKeyBehavior::PERM_WALLET_WITHDRAW);
 
         $wtx = $model->processWithdrawal(['method'=>'api']);
-        Yii::$app->response->statusCode = 201;
+        \LNPay::$app->response->statusCode = 201;
         return WalletTransaction::findOne($wtx->id);
     }
 
     public function actionKeysend($access_key)
     {
         $wallet = $this->findByKey($access_key);
-        $bodyParams = Yii::$app->getRequest()->getBodyParams();
+        $bodyParams = \LNPay::$app->getRequest()->getBodyParams();
         $this->checkAccessKey(UserAccessKeyBehavior::PERM_WALLET_WITHDRAW);
 
         if ($this->isAsync) {
-            $id = Yii::$app->queue->push(new LnWalletKeysendFormJob([
+            $id = \LNPay::$app->queue->push(new LnWalletKeysendFormJob([
                 'access_key' => $access_key,
                 'wallet_id' => $wallet->id,
                 'bodyParams'=>$bodyParams
@@ -204,10 +204,10 @@ class WalletController extends BaseApiController
                 'wallet_id' => $wallet->id,
                 'bodyParams'=>$bodyParams
             ]);
-            $wtx_id = $job->execute(Yii::$app->queue);
+            $wtx_id = $job->execute(\LNPay::$app->queue);
         }
 
-        Yii::$app->response->statusCode = 201;
+        \LNPay::$app->response->statusCode = 201;
         return WalletTransaction::findOne($wtx_id);
     }
 
@@ -217,11 +217,11 @@ class WalletController extends BaseApiController
         $this->checkAccessKey(UserAccessKeyBehavior::PERM_WALLET_WITHDRAW);
 
         $params = [
-            'num_satoshis'=>Yii::$app->request->getQueryParam('num_satoshis'),
-            'memo'=>Yii::$app->request->getQueryParam('memo'),
+            'num_satoshis'=>\LNPay::$app->request->getQueryParam('num_satoshis'),
+            'memo'=>\LNPay::$app->request->getQueryParam('memo'),
             'ott'=>HelperComponent::generateRandomString(12),
-            'passThru'=>Yii::$app->request->getQueryParam('passThru'),
-            'public'=>Yii::$app->request->getQueryParam('public')
+            'passThru'=>\LNPay::$app->request->getQueryParam('passThru'),
+            'public'=>\LNPay::$app->request->getQueryParam('public')
             ];
         $array = [
             'lnurl'=>$wallet->getLnurlWithdrawLinkEncoded($access_key=NULL,$params),
@@ -236,9 +236,9 @@ class WalletController extends BaseApiController
         $this->checkAccessKey(UserAccessKeyBehavior::ROLE_WALLET_ADMIN);
 
         $params = [
-            'num_satoshis'=>Yii::$app->request->getQueryParam('num_satoshis'),
-            'memo'=>Yii::$app->request->getQueryParam('memo'),
-            'passThru'=>Yii::$app->request->getQueryParam('passThru')
+            'num_satoshis'=>\LNPay::$app->request->getQueryParam('num_satoshis'),
+            'memo'=>\LNPay::$app->request->getQueryParam('memo'),
+            'passThru'=>\LNPay::$app->request->getQueryParam('passThru')
         ];
         $array = [
             'lnurl'=>$wallet->getLnurlWithdrawLinkEncoded($access_key=NULL,$params)
@@ -283,7 +283,7 @@ class WalletController extends BaseApiController
                 if ($ott) {
                     $dbOtt = ($wallet->getJsonData('ott')?:[]);
                     if (!array_key_exists($ott,$dbOtt))
-                        throw new UnauthorizedHttpException('LNURL is no longer valid: '.Yii::$app->request->absoluteUrl);
+                        throw new UnauthorizedHttpException('LNURL is no longer valid: '.\LNPay::$app->request->absoluteUrl);
                 } else {
                     $this->checkAccessKey(UserAccessKeyBehavior::PERM_WALLET_PUBLIC_WITHDRAW);
                 }
@@ -296,23 +296,23 @@ class WalletController extends BaseApiController
                 $model->passThru = $pt;
 
                 $model->processWithdrawal(['method'=>'lnurl','k1'=>$k1,'ott'=>$ott]);
-                Yii::$app->response->statusCode = 201;
+                \LNPay::$app->response->statusCode = 201;
                 $wallet->deleteJsonData([$ott]);
                 return ['status'=>'OK'];
             } catch (\Throwable $e) {
-                Yii::$app->response->statusCode = 200;
+                \LNPay::$app->response->statusCode = 200;
                 return ['status'=>'ERROR','reason'=>$e->getMessage()];
             }
 
         } else {
 
             if (empty($memo)) {
-                $memo = Yii::$app->name.' Wallet Withdraw';
+                $memo = \LNPay::$app->name.' Wallet Withdraw';
             }
 
             $json = [];
             $baseUrl = ["/v1/wallet/{$access_key}/lnurl-process"];
-            $json['callback'] = Yii::$app->urlManager->createAbsoluteUrl($baseUrl+['ott'=>$ott,'passThru'=>$passThru]);
+            $json['callback'] = \LNPay::$app->urlManager->createAbsoluteUrl($baseUrl+['ott'=>$ott,'passThru'=>$passThru]);
             $json['k1'] = 'k1';
             $json['maxWithdrawable'] = ($wallet->getIsEligibleToWithdraw($num_satoshis)?$num_satoshis:$wallet->balance)*1000;
             $json['defaultDescription'] = $memo;
@@ -337,13 +337,13 @@ class WalletController extends BaseApiController
         $lnTx = new LnTx();
         $allowedParams = [
             'num_satoshis'=>0,
-            'memo' => Yii::$app->name.' Invoice',
+            'memo' => \LNPay::$app->name.' Invoice',
             'expiry' => 86400,
             'description_hash' => NULL
         ];
 
         $array = [];
-        if ($passThru = Yii::$app->request->getBodyParam('passThru')) {
+        if ($passThru = \LNPay::$app->request->getBodyParam('passThru')) {
             if (is_array($passThru)) {
                 $array = $passThru;
             } else {
@@ -360,7 +360,7 @@ class WalletController extends BaseApiController
         $lnTx->ln_node_id = $wallet->ln_node_id;
 
         foreach ($allowedParams as $param => $default) {
-            $lnTx->{$param} = (Yii::$app->request->getBodyParam($param,$default));
+            $lnTx->{$param} = (\LNPay::$app->request->getBodyParam($param,$default));
         }
 
         if ($lnTx->validate())
@@ -368,7 +368,7 @@ class WalletController extends BaseApiController
         else
             throw new BadRequestHttpException(HelperComponent::getErrorStringFromInvalidModel($lnTx));
 
-        Yii::$app->response->statusCode = 201;
+        \LNPay::$app->response->statusCode = 201;
         return LnTx::findOne($lnTxObject->id);
     }
 
@@ -377,7 +377,7 @@ class WalletController extends BaseApiController
         $this->checkAccessKey(UserAccessKeyBehavior::PERM_WALLET_TRANSFER);
 
         $wtf = new WalletTransferForm();
-        $wtf->load(Yii::$app->request->getBodyParams(),'');
+        $wtf->load(\LNPay::$app->request->getBodyParams(),'');
         $wtf->source_wallet_id = $this->findByKey($access_key);
 
         if ($wtf->validate()) {
@@ -388,7 +388,7 @@ class WalletController extends BaseApiController
         else
             throw new BadRequestHttpException(HelperComponent::getErrorStringFromInvalidModel($wtf));
 
-        Yii::$app->response->statusCode = 201;
+        \LNPay::$app->response->statusCode = 201;
         return ['wtx_transfer_in'=>$wtx_in->toArray(),'wtx_transfer_out'=>$wtx_out->toArray()];
     }
 

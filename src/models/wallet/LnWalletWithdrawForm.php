@@ -143,7 +143,7 @@ class LnWalletWithdrawForm extends Model
 
     public function processWithdrawal($data=[])
     {
-        if (Yii::$app->mutex->acquire($this->walletObject->publicId)) {
+        if (\LNPay::$app->mutex->acquire($this->walletObject->publicId)) {
 
             if ($this->validate(['fee_limit_msat']) && $this->validate()) {
                 //Carry on!

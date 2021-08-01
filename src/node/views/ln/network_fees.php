@@ -1,7 +1,7 @@
 <?php
 
 $this->title = 'Lightning Network Fees';
-$feeTargetWallet = Yii::$app->user->identity->getJsonData(\lnpay\models\User::DATA_FEE_TARGET_WALLET);
+$feeTargetWallet = \LNPay::$app->user->identity->getJsonData(\lnpay\models\User::DATA_FEE_TARGET_WALLET);
 $feeWallet = $node->feeWallet;
 ?>
 
@@ -24,16 +24,16 @@ $feeWallet = $node->feeWallet;
         </p>
         <p>
             <?php /* ?>
-            Current INBOUND (deposits) fee rate: <strong><?=Yii::$app->user->identity->getServiceFeeRate(\lnpay\models\wallet\WalletTransactionType::LN_DEPOSIT)*100;?>%</strong>
+            Current INBOUND (deposits) fee rate: <strong><?=\LNPay::$app->user->identity->getServiceFeeRate(\lnpay\models\wallet\WalletTransactionType::LN_DEPOSIT)*100;?>%</strong>
             <br/>
-            Current OUTBOUND (withdrawals) fee rate: <strong><?=Yii::$app->user->identity->getServiceFeeRate(\lnpay\models\wallet\WalletTransactionType::LN_WITHDRAWAL)*100;?>%</strong>
+            Current OUTBOUND (withdrawals) fee rate: <strong><?=\LNPay::$app->user->identity->getServiceFeeRate(\lnpay\models\wallet\WalletTransactionType::LN_WITHDRAWAL)*100;?>%</strong>
             <br/>
             Current TRANSFER (transfers) fee rate: <strong>0%</strong>
             <br/>
             <?php */ ?>
             Lightning Network routing fees: <strong><?=$feeTargetWallet;?> wallet</strong>
             <br/>
-            Max routing fee allowed: <strong><?=(Yii::$app->user->identity->getJsonData(\lnpay\models\User::DATA_MAX_NETWORK_FEE_PERCENT)?:5);?>%</strong>
+            Max routing fee allowed: <strong><?=(\LNPay::$app->user->identity->getJsonData(\lnpay\models\User::DATA_MAX_NETWORK_FEE_PERCENT)?:5);?>%</strong>
         </p>
 
         <div>

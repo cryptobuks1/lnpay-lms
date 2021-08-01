@@ -123,7 +123,7 @@ class WalletTransferForm extends Model
 
     public function executeTransfer()
     {
-        if (Yii::$app->mutex->acquire($this->sourceWalletObject->publicId) && Yii::$app->mutex->acquire($this->destWalletObject->publicId)) {
+        if (\LNPay::$app->mutex->acquire($this->sourceWalletObject->publicId) && \LNPay::$app->mutex->acquire($this->destWalletObject->publicId)) {
             $json_data = [
                 'source_wallet_id' => $this->sourceWalletObject->external_hash,
                 'dest_wallet_id' => $this->destWalletObject->external_hash,

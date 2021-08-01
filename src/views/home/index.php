@@ -10,7 +10,7 @@ use Dusterio\LinkPreview\Client;
 use \lnpay\models\link\Rule;
 use \yii\helpers\HtmlPurifier;
 
-$this->title = Yii::$app->name;
+$this->title = \LNPay::$app->name;
 
 $this->registerJs('
 $("#withdraw-loader").hide();
@@ -40,7 +40,7 @@ $(\'#withdrawForm\').on(\'ajaxBeforeSend\', function (event, jqXHR, settings) {
                     </h4>
                 </div>
                 <div class="main-cta-box">
-                    <?php if (Yii::$app->user->isGuest) { ?>
+                    <?php if (\LNPay::$app->user->isGuest) { ?>
                         <?=$this->render('signup',['model'=>new SignupForm()]);?>
                     <?php } else { ?>
                         You are logged in!

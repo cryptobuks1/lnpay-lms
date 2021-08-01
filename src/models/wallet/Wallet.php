@@ -78,7 +78,7 @@ class Wallet extends \yii\db\ActiveRecord
             ['ln_node_id','default','value'=>@LnNode::getLnpayNodeQuery()->one()->id],
             ['ln_node_id','checkUserNode'],
             //[['user_label'],'unique'],
-            [['user_id'],'default','value'=>function(){return Yii::$app->user->id;}],
+            [['user_id'],'default','value'=>function(){return \LNPay::$app->user->id;}],
             [['external_hash'],'default','value'=>function(){ return 'wal_'.HelperComponent::generateRandomString(14); }],
             [['json_data'], 'safe'],
             [['user_label', 'external_hash', 'ln_node_id'], 'string', 'max' => 255]
@@ -178,10 +178,10 @@ class Wallet extends \yii\db\ActiveRecord
         //if we are using the user's nodes, make sure they are only adding theirs
         $node = LnNode::findOne($this->ln_node_id);
 
-        if (Yii::$app->user->isGuest) { //e.g. LNURL-withdraw where there is no authenticated user
+        if (\LNPay::$app->user->isGuest) { //e.g. LNURL-withdraw where there is no authenticated user
             //this seems weird, but it is correct
         } else {
-            if ($node->user_id != Yii::$app->user->id)
+            if ($node->user_id != \LNPay::$app->user->id)
                 $this->addError('ln_node_id','Node does not belong to this user!');
         }
 
@@ -194,7 +194,7 @@ class Wallet extends \yii\db\ActiveRecord
 
     public function calculateBalance()
     {
-        $sum = Yii::$app->db->createCommand(
+        $sum = \LNPay::$app->db->createCommand(
             'SELECT SUM(num_satoshis) 
              FROM wallet_transaction 
              WHERE wallet_id = '.$this->id
@@ -261,7 +261,7 @@ class Wallet extends \yii\db\ActiveRecord
         if (isset($params['ott']))
             $this->appendJsonData(['ott'=>[$params['ott']=>$params['ott']]]);
 
-        return \tkijewski\lnurl\encodeUrl(Yii::$app->urlManager->createAbsoluteUrl(["/v1/wallet/{$access_key}/lnurl-process",'tag'=>'withdraw','ott'=>@$params['ott'],'num_satoshis'=>@$params['num_satoshis'],'memo'=>@$params['memo'],'passThru'=>@$params['passThru']]));
+        return \tkijewski\lnurl\encodeUrl(\LNPay::$app->urlManager->createAbsoluteUrl(["/v1/wallet/{$access_key}/lnurl-process",'tag'=>'withdraw','ott'=>@$params['ott'],'num_satoshis'=>@$params['num_satoshis'],'memo'=>@$params['memo'],'passThru'=>@$params['passThru']]));
     }
 
     public function getIsFeeWallet()
@@ -276,7 +276,7 @@ class Wallet extends \yii\db\ActiveRecord
 
     public function releaseMutex()
     {
-        Yii::$app->mutex->release($this->publicId);
+        \LNPay::$app->mutex->release($this->publicId);
     }
 
     /**

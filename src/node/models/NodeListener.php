@@ -206,7 +206,7 @@ class NodeListener extends \yii\db\ActiveRecord
             $array[] = $listener->id;
         }
 
-        Yii::$app->queue->push(new SupervisorWriteLndRpcConfigFileJob([
+        \LNPay::$app->queue->push(new SupervisorWriteLndRpcConfigFileJob([
             'config_filename' => $node->supervisorConfFilename,
             'listeners' => $array
         ]));
@@ -221,7 +221,7 @@ class NodeListener extends \yii\db\ActiveRecord
      */
     public function updateSupervisorParameters($array)
     {
-        Yii::$app->queue->push(new SupervisorUpdateLndRpcConfigFileJob([
+        \LNPay::$app->queue->push(new SupervisorUpdateLndRpcConfigFileJob([
             'listener_id' => $this->id,
             'parameters' => ArrayHelper::merge($this->supervisor_parameters,$array)
         ]));

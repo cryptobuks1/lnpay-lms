@@ -36,7 +36,7 @@ class WalletTransactionController extends Controller
     public function actionIndex()
     {
         $searchModel = new WalletTransactionSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(\LNPay::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -66,7 +66,7 @@ class WalletTransactionController extends Controller
     {
         $model = new WalletTransaction();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(\LNPay::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -86,7 +86,7 @@ class WalletTransactionController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(\LNPay::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 

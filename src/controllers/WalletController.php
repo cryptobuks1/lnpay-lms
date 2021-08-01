@@ -47,7 +47,7 @@ class WalletController extends BaseDashController
     {
         $searchModel = new WalletSearch();
         $searchModel->user_id = $this->user->id;
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(\LNPay::$app->request->queryParams);
 
         return $this->render('dashboard',compact('searchModel','dataProvider'));
     }
@@ -65,34 +65,34 @@ class WalletController extends BaseDashController
         $tModel = new WalletTransferForm();
 
         //Handle Withdrawal
-        if (Yii::$app->request->isPost) {
-            if ($wModel->load(Yii::$app->request->post())) {
-                if (Yii::$app->session->getFlash('bt')) {
-                    Yii::$app->session->setFlash('success', 'Withdrawal Sent!');
-                    return $this->redirect(Yii::$app->request->referrer);
+        if (\LNPay::$app->request->isPost) {
+            if ($wModel->load(\LNPay::$app->request->post())) {
+                if (\LNPay::$app->session->getFlash('bt')) {
+                    \LNPay::$app->session->setFlash('success', 'Withdrawal Sent!');
+                    return $this->redirect(\LNPay::$app->request->referrer);
                 }
             }
         }
 
         //Handle transfer
-        if ($tModel->load(Yii::$app->request->post())) {
+        if ($tModel->load(\LNPay::$app->request->post())) {
             try {
                 $w = Wallet::findById($tModel->source_wallet_id);
-                if (Yii::$app->user->id != $w->user_id) {
+                if (\LNPay::$app->user->id != $w->user_id) {
                     throw new \Exception('Invalid source wallet');
                 }
             } catch (\Throwable $t) {
-                Yii::$app->session->setFlash('error',$t->getMessage());
-                return $this->redirect(Yii::$app->request->referrer);
+                \LNPay::$app->session->setFlash('error',$t->getMessage());
+                return $this->redirect(\LNPay::$app->request->referrer);
             }
 
             if ($tModel->validate()) {
                 $tModel->executeTransfer();
-                Yii::$app->session->setFlash('success',"Transfer successful!");
-                return $this->redirect(Yii::$app->request->referrer);
+                \LNPay::$app->session->setFlash('success',"Transfer successful!");
+                return $this->redirect(\LNPay::$app->request->referrer);
             } else {
-                Yii::$app->session->setFlash('error',HelperComponent::getErrorStringFromInvalidModel($tModel));
-                return $this->redirect(Yii::$app->request->referrer);
+                \LNPay::$app->session->setFlash('error',HelperComponent::getErrorStringFromInvalidModel($tModel));
+                return $this->redirect(\LNPay::$app->request->referrer);
             }
         }
 
@@ -102,7 +102,7 @@ class WalletController extends BaseDashController
         $walletObject = $this->findModel($id);
         $walletObject->updateBalance();
 
-        $availableWalletsForTransferQuery = Wallet::find()->where(['!=','external_hash',$id])->andWhere(['user_id'=>Yii::$app->user->id])->orderBy('balance DESC');
+        $availableWalletsForTransferQuery = Wallet::find()->where(['!=','external_hash',$id])->andWhere(['user_id'=>\LNPay::$app->user->id])->orderBy('balance DESC');
 
         return $this->render('view', [
             'wallet' => $walletObject,
@@ -123,9 +123,9 @@ class WalletController extends BaseDashController
     {
         $walletObject = $this->findModel($id);
         $searchModel = new WalletTransactionSearch();
-        $searchModel->user_id = Yii::$app->user->id;
+        $searchModel->user_id = \LNPay::$app->user->id;
         $searchModel->wallet_id = $walletObject->id;
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(\LNPay::$app->request->queryParams);
         $query = $dataProvider->query;
         $query->innerJoinWith('lnTx');
         $query->andFilterWhere(['ln_tx.is_keysend'=>1]);
@@ -137,9 +137,9 @@ class WalletController extends BaseDashController
         $walletObject = $this->findModel($id);
 
         $searchModel = new WalletTransactionSearch();
-        $searchModel->user_id = Yii::$app->user->id;
+        $searchModel->user_id = \LNPay::$app->user->id;
         $searchModel->wallet_id = $walletObject->id;
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(\LNPay::$app->request->queryParams);
         return $this->render('views/_wtx-breakdown',['wtxSearchModel'=>$searchModel,'wtxDataProvider'=>$dataProvider,'wallet'=>$walletObject]);
     }
 
@@ -154,8 +154,8 @@ class WalletController extends BaseDashController
         $wModel = new LnWalletWithdrawForm();
         $wModel->wallet_id = $this->findModel($id)->id;
 
-        if (Yii::$app->request->isAjax && $wModel->load(Yii::$app->request->post())) {
-            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        if (\LNPay::$app->request->isAjax && $wModel->load(\LNPay::$app->request->post())) {
+            \LNPay::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
             try {
                 $bt = $wModel->processWithdrawal();
@@ -164,7 +164,7 @@ class WalletController extends BaseDashController
             }
 
             if (empty($result)) {
-                Yii::$app->session->setFlash('bt',true);
+                \LNPay::$app->session->setFlash('bt',true);
                 return [];
             } else {
                 return $result;
@@ -181,7 +181,7 @@ class WalletController extends BaseDashController
     {
         $model = new Wallet();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(\LNPay::$app->request->post()) && $model->save()) {
             return $this->redirect(['/wallet/view', 'id' => $model->id]);
         }
 
@@ -201,7 +201,7 @@ class WalletController extends BaseDashController
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(\LNPay::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -233,7 +233,7 @@ class WalletController extends BaseDashController
      */
     protected function findModel($id)
     {
-        if (($model = Wallet::find()->where(['user_id'=>Yii::$app->user->id,'id'=>$id])->orWhere(['external_hash'=>$id,'user_id'=>Yii::$app->user->id])->one()) !== null) {
+        if (($model = Wallet::find()->where(['user_id'=>\LNPay::$app->user->id,'id'=>$id])->orWhere(['external_hash'=>$id,'user_id'=>\LNPay::$app->user->id])->one()) !== null) {
             return $model;
         }
 

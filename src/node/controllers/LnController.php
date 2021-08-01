@@ -56,7 +56,7 @@ class LnController extends BaseNodeController
     public function actionIndex()
     {
         $gi = $this->nodeObject->healthCheck('REST');
-        $details = Yii::$app->session->getFlash('new_node_details',false);
+        $details = \LNPay::$app->session->getFlash('new_node_details',false);
         $node = $this->nodeObject;
         return $this->render('node', [
             'node' => $node,
@@ -73,7 +73,7 @@ class LnController extends BaseNodeController
      */
     public function actionOnchain()
     {
-        $details = Yii::$app->session->getFlash('new_node_details',false);
+        $details = \LNPay::$app->session->getFlash('new_node_details',false);
         $node = $this->nodeObject;
 
         $balances = $node->getLndConnector()->walletBalance();
@@ -96,11 +96,11 @@ class LnController extends BaseNodeController
                 break;
         }
         if ($gi) {
-            Yii::$app->session->setFlash('success','GetInfo successfully retrieved!');
+            \LNPay::$app->session->setFlash('success','GetInfo successfully retrieved!');
         } else {
-            Yii::$app->session->setFlash('error','GetInfo failed! Node is offline or unreachable');
+            \LNPay::$app->session->setFlash('error','GetInfo failed! Node is offline or unreachable');
         }
-        return $this->redirect(Yii::$app->request->referrer);
+        return $this->redirect(\LNPay::$app->request->referrer);
     }
 
     public function actionConnect()
@@ -123,7 +123,7 @@ class LnController extends BaseNodeController
     {
         $model = $this->nodeObject;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(\LNPay::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 

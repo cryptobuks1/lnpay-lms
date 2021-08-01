@@ -114,7 +114,7 @@ class UserAccessKeyBehavior extends Behavior
      */
     public function getUserAccessKeys($byRole=null)
     {
-        $auth = Yii::$app->authManager;
+        $auth = \LNPay::$app->authManager;
 
         if ($this->accessKeyColumnName)
             $uaks = UserAccessKey::find()->where(['user_id'=>$this->userId,$this->accessKeyColumnName=>$this->owner->id]);
@@ -172,7 +172,7 @@ class UserAccessKeyBehavior extends Behavior
 
     public static function checkKeyAccess($item,$access_key)
     {
-        return Yii::$app->authManager->checkAccess($access_key,$item);
+        return \LNPay::$app->authManager->checkAccess($access_key,$item);
     }
 
     public static function getAccessKeyPrefix($access_key)

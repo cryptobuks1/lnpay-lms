@@ -13,7 +13,7 @@ class m210423_153759_lnurl_withdraw_role extends Migration
      */
     public function safeUp()
     {
-        $auth = Yii::$app->authManager;
+        $auth = \LNPay::$app->authManager;
 
         // add "createPost" permission
         $public_withdraw = $auth->createPermission('wallet_public_withdraw');

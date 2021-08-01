@@ -36,12 +36,12 @@ class RpcController extends BaseNodeController
      */
     public function actionForwarder()
     {
-        $node = Yii::$app->user->identity->lnNode;
+        $node = \LNPay::$app->user->identity->lnNode;
         if (!$node) {
             return $this->redirect(['/node/dashboard']);
         }
         $searchModel = new IntegrationWebhookSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(\LNPay::$app->request->queryParams);
 
 
         return $this->render('rpc-forwarder', [
@@ -69,7 +69,7 @@ class RpcController extends BaseNodeController
                     break;
             }
             sleep(1);
-            return $this->redirect(Yii::$app->request->referrer);
+            return $this->redirect(\LNPay::$app->request->referrer);
         }
 
         $provider = new ActiveDataProvider([
@@ -88,7 +88,7 @@ class RpcController extends BaseNodeController
         $n->removeLndRpcSubscribers();
         $n->spawnLndRpcSubscribers();
         sleep(5);
-        return $this->redirect(Yii::$app->request->referrer);
+        return $this->redirect(\LNPay::$app->request->referrer);
 
     }
 }

@@ -43,7 +43,7 @@ class UserApiLogSearch extends UserApiLog
     public function search($params)
     {
         $query = UserApiLog::find();
-        $this->user_id = Yii::$app->user->id;
+        $this->user_id = \LNPay::$app->user->id;
 
         // add conditions that should always apply here
 

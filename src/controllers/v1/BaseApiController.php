@@ -47,13 +47,13 @@ class BaseApiController extends ActiveController
     public function init()
     {
         parent::init();
-        \Yii::$app->user->enableSession = false;
+        \LNPay::$app->user->enableSession = false;
         set_time_limit(10);
     }
 
     public function checkAdminAccess()
     {
-        if (Yii::$app->user->identity->status >= User::STATUS_API_ADMIN)
+        if (\LNPay::$app->user->identity->status >= User::STATUS_API_ADMIN)
             return true;
         else
             throw new UnauthorizedHttpException('You do not have permission to do this!');
@@ -61,12 +61,12 @@ class BaseApiController extends ActiveController
 
     public function getUser()
     {
-        return User::findOne(Yii::$app->user->id);
+        return User::findOne(\LNPay::$app->user->id);
     }
 
     public function getIsAsync()
     {
-        $headers = Yii::$app->request->getHeaders();
+        $headers = \LNPay::$app->request->getHeaders();
         $async = $headers->get('X-LNPAY-ASYNC',NULL);
         if ($async) {
             return true;
@@ -82,9 +82,9 @@ class BaseApiController extends ActiveController
 
             //We can check for perms or other things on the current session key
 
-            $apiKey = @Yii::$app->user->identity->sessionApiKey;
+            $apiKey = @\LNPay::$app->user->identity->sessionApiKey;
 
-            $function = Yii::$app->controller->id.'/'.Yii::$app->controller->action->id;
+            $function = \LNPay::$app->controller->id.'/'.\LNPay::$app->controller->action->id;
 
             $sakOnlyArray = [
                 'v1/wallet-transaction/view-all',

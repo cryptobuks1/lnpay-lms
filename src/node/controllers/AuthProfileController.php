@@ -38,8 +38,8 @@ class AuthProfileController extends BaseNodeController
     {
         $searchModel = new LnNodeProfileSearch();
         $searchModel->ln_node_id = $this->nodeObject->id;
-        $searchModel->user_id = Yii::$app->user->id;
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $searchModel->user_id = \LNPay::$app->user->id;
+        $dataProvider = $searchModel->search(\LNPay::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -69,7 +69,7 @@ class AuthProfileController extends BaseNodeController
     {
         $model = new LnNodeProfile();
         $model->ln_node_id = $this->nodeObject->id;
-        if ($model->load(Yii::$app->request->post())) {
+        if ($model->load(\LNPay::$app->request->post())) {
             if ($prof = $model->bakeMacaroon()) {
                 return $this->redirect(['view', 'id' => $prof->id]);
             }
@@ -92,7 +92,7 @@ class AuthProfileController extends BaseNodeController
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(\LNPay::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -110,8 +110,8 @@ class AuthProfileController extends BaseNodeController
      */
     public function actionDelete($id)
     {
-        Yii::$app->session->setFlash('error','Cannot delete macaroons yet!');
-        return $this->redirect(Yii::$app->request->referrer);
+        \LNPay::$app->session->setFlash('error','Cannot delete macaroons yet!');
+        return $this->redirect(\LNPay::$app->request->referrer);
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);

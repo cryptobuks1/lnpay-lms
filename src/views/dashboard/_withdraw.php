@@ -4,7 +4,7 @@ use \yii\bootstrap\ActiveForm;
 use \yii\helpers\Html;
 
 ?>
-    <?php if (Yii::$app->user->identity->eligibleToWithdraw) { ?>
+    <?php if (\LNPay::$app->user->identity->eligibleToWithdraw) { ?>
         <?php $wForm = ActiveForm::begin([
             // 'layout'=>'horizontal',
             'enableAjaxValidation'=>true,

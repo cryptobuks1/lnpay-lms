@@ -109,7 +109,7 @@ $this->params['breadcrumbs'][] = 'View';
             <a href="lightning:<?=$lnurl;?>">
                 <?='<img src="https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=' .$lnurl. '" />';?>
             </a>
-            <p><?=Yii::$app->name;?> supports LNURL - Scan or click with a LNURL compatible wallet.</p>
+            <p><?=\LNPay::$app->name;?> supports LNURL - Scan or click with a LNURL compatible wallet.</p>
 
         </div>
     </div>
@@ -133,7 +133,7 @@ $this->params['breadcrumbs'][] = 'View';
 
             <?php
                 $key = $wallet->getFirstAccessKeyByRole(\lnpay\behaviors\UserAccessKeyBehavior::ROLE_WALLET_INVOICE);
-                $userKey = Yii::$app->user->identity->getFirstAccessKeyByRole(\lnpay\behaviors\UserAccessKeyBehavior::ROLE_PUBLIC_API_KEY);
+                $userKey = \LNPay::$app->user->identity->getFirstAccessKeyByRole(\lnpay\behaviors\UserAccessKeyBehavior::ROLE_PUBLIC_API_KEY);
                $this->registerJs("
                function createInvoice() {
                    $.ajax({

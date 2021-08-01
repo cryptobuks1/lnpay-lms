@@ -343,7 +343,7 @@ class LnNode extends \yii\db\ActiveRecord
             $nL->delete();
         }
 
-        Yii::$app->queue->push(new SupervisorRemoveLndRpcConfigFileJob([
+        \LNPay::$app->queue->push(new SupervisorRemoveLndRpcConfigFileJob([
             'file_name' => $this->supervisorConfFilename
         ]));
     }

@@ -147,9 +147,9 @@ class LnTx extends \yii\db\ActiveRecord
 
     public function generateInvoice($checkLimits=false)
     {
-        $this->user_id = ($this->user_id?:Yii::$app->user->id);
+        $this->user_id = ($this->user_id?:\LNPay::$app->user->id);
 
-        if (Yii::$app->user->isGuest || !Yii::$app->user->identity->getJsonData(User::DATA_IS_PAID_TIER))
+        if (\LNPay::$app->user->isGuest || !\LNPay::$app->user->identity->getJsonData(User::DATA_IS_PAID_TIER))
             $this->memo = $this->memo. ' (via LNPAY.co)';
 
         $invoiceOptions = [

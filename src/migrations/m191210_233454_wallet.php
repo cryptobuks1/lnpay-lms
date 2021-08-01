@@ -67,7 +67,7 @@ class m191210_233454_wallet extends Migration
 
     public function baseWalletPerms()
     {
-        $auth = Yii::$app->authManager;
+        $auth = \LNPay::$app->authManager;
 
         // add "createPost" permission
         $read = $auth->createPermission('wallet_read');
@@ -117,7 +117,7 @@ class m191210_233454_wallet extends Migration
      */
     public function safeDown()
     {
-        $auth = Yii::$app->authManager;
+        $auth = \LNPay::$app->authManager;
         $auth->removeAll();
         $this->execute("DROP TABLE `wallet_transaction`");
         $this->execute("DROP TABLE `user_access_key`");

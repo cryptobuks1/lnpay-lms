@@ -77,7 +77,7 @@ class HomeController extends Controller
 
     public function actionIndex()
     {
-        if (Yii::$app->user->isGuest)
+        if (\LNPay::$app->user->isGuest)
             return $this->render('index');
         else
             return $this->redirect(['/dashboard/home']);
@@ -90,12 +90,12 @@ class HomeController extends Controller
      */
     public function actionLogin()
     {
-        if (!Yii::$app->user->isGuest) {
+        if (!\LNPay::$app->user->isGuest) {
             return $this->redirect(['/dashboard/home']);
         }
 
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+        if ($model->load(\LNPay::$app->request->post()) && $model->login()) {
             $this->mfaPassed();
         } else {
             return $this->render('login', [
@@ -110,7 +110,7 @@ class HomeController extends Controller
      */
     public function mfaPassed()
     {
-        $returnUrl = Yii::$app->user->returnUrl;
+        $returnUrl = \LNPay::$app->user->returnUrl;
 
         if ($returnUrl == '/') {
             $returnUrl = '/dashboard/home';
@@ -126,7 +126,7 @@ class HomeController extends Controller
      */
     public function actionLogout()
     {
-        Yii::$app->user->logout();
+        \LNPay::$app->user->logout();
 
         return $this->goHome();
     }
@@ -138,13 +138,13 @@ class HomeController extends Controller
      */
     public function actionSignup()
     {
-        $sessionData = Yii::$app->session;
+        $sessionData = \LNPay::$app->session;
 
         $model = new SignupForm();
-        if ($model->load(Yii::$app->request->post())) {
+        if ($model->load(\LNPay::$app->request->post())) {
             if ($user = $model->signup()) {
-                if (Yii::$app->getUser()->login($user)) {
-                    Yii::$app->session->setFlash('new_user',1);
+                if (\LNPay::$app->getUser()->login($user)) {
+                    \LNPay::$app->session->setFlash('new_user',1);
                     return $this->redirect(['/dashboard/home']);
                 }
             }
@@ -163,13 +163,13 @@ class HomeController extends Controller
     public function actionRequestPasswordReset()
     {
         $model = new PasswordResetRequestForm();
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+        if ($model->load(\LNPay::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
-                Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
+                \LNPay::$app->session->setFlash('success', 'Check your email for further instructions.');
 
-                return $this->redirect(Yii::$app->request->getReferrer());
+                return $this->redirect(\LNPay::$app->request->getReferrer());
             } else {
-                Yii::$app->session->setFlash('error', 'Sorry, we are unable to reset password for the provided email address.');
+                \LNPay::$app->session->setFlash('error', 'Sorry, we are unable to reset password for the provided email address.');
             }
         }
 
@@ -193,8 +193,8 @@ class HomeController extends Controller
             throw new BadRequestHttpException($e->getMessage());
         }
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
-            Yii::$app->session->setFlash('success', 'New password saved.');
+        if ($model->load(\LNPay::$app->request->post()) && $model->validate() && $model->resetPassword()) {
+            \LNPay::$app->session->setFlash('success', 'New password saved.');
 
             return $this->goHome();
         }

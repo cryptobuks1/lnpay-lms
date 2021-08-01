@@ -52,7 +52,7 @@ class HelperComponent extends Component
     }
 
     public static function generateRandomString($length=32) {
-        return str_replace(['-','_'],'',Yii::$app->security->generateRandomString($length));
+        return str_replace(['-','_'],'',\LNPay::$app->security->generateRandomString($length));
     }
 
     public static function getRolePrefix($role)

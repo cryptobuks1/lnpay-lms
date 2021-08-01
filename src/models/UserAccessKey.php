@@ -88,7 +88,7 @@ class UserAccessKey extends \yii\db\ActiveRecord
 
     public static function createKey($user_id,$role,$attributes)
     {
-        $auth = Yii::$app->authManager;
+        $auth = \LNPay::$app->authManager;
 
         $prefix = HelperComponent::getRolePrefix($role);
         $apiKey = HelperComponent::generateKeyByRolePrefix($prefix);

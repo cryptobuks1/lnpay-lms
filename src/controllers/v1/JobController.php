@@ -44,7 +44,7 @@ class JobController extends BaseApiController
             $r = json_decode($r->job_data,TRUE);
             if (isset($r['access_key'])) {
                 $uak = UserAccessKey::find()->where(['access_key'=>$r['access_key']])->one();
-                if ($uak && ($uak->user_id == Yii::$app->user->id)) {
+                if ($uak && ($uak->user_id == \LNPay::$app->user->id)) {
                     return true;
                 }
             }

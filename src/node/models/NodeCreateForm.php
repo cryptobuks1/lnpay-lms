@@ -53,14 +53,14 @@ class NodeCreateForm extends Model
         $cluster = LnCluster::getDefaultCluster();
         $result = $cluster->spawnSubnode();
 
-        Yii::$app->queue->push(new AddLndSubnodeJob([
+        \LNPay::$app->queue->push(new AddLndSubnodeJob([
             'node_details' => $result
         ]));
 
         //Create new node in db, placeholder for now
         $node = new LnNode;
         $node->id = $result['node_id'];
-        $node->user_id = Yii::$app->user->id;
+        $node->user_id = \LNPay::$app->user->id;
         $node->user_label = $this->user_label;
         $node->rest_port = $result['rest_port'];
         $node->rpc_port = $result['rpc_port'];

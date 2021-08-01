@@ -17,7 +17,7 @@ class LNPayComponent extends Component
     public static function genQrWithLabel($str,$text=null)
     {
         if (!$text)
-            $text = Yii::$app->name;
+            $text = \LNPay::$app->name;
 
         $options = new QROptions([
             'outputType' => QRCode::OUTPUT_IMAGE_PNG,
@@ -27,7 +27,7 @@ class LNPayComponent extends Component
         $qrImage = (new QRCode($options));
         $qrOutputInterface = new QRImageWithText($options, $qrImage->getMatrix($str));
 
-        $response = Yii::$app->getResponse();
+        $response = \LNPay::$app->getResponse();
         $response->headers->set('Content-Type', 'image/png');
         $response->headers->set("Pragma-directive: no-cache");
         $response->headers->set("Cache-directive: no-cache");
@@ -43,16 +43,16 @@ class LNPayComponent extends Component
 
     public static function processTz($user)
     {
-        if (Yii::$app instanceof \yii\web\Application) {
-            if ($tz = Yii::$app->session->get('tz')) {
+        if (\LNPay::$app instanceof \yii\web\Application) {
+            if ($tz = \LNPay::$app->session->get('tz')) {
                 date_default_timezone_set($tz);
                 return $tz;
             } else if ($tz = $user->tz) {
-                Yii::$app->session->set('tz',$tz);
+                \LNPay::$app->session->set('tz',$tz);
                 date_default_timezone_set($tz);
                 return $tz;
             } else {
-                $ip = Yii::$app->request->getUserIP();
+                $ip = \LNPay::$app->request->getUserIP();
                 $ipInfo = @file_get_contents('https://ipinfo.io/'.$ip);
                 $ipInfo = json_decode($ipInfo, true);
                 $tz = (@$ipInfo['timezone']?:'UTC');

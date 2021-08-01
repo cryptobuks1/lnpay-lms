@@ -27,7 +27,7 @@ class WebhookController extends BaseDashController
     public function actionIndex()
     {
         $searchModel = new IntegrationWebhookSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(\LNPay::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -55,14 +55,14 @@ class WebhookController extends BaseDashController
         $iwhr = IntegrationWebhookRequest::prepareRequest($IW,$iwhr->actionFeed);
         ActionComponent::webhookRequest($iwhr);
 
-        Yii::$app->session->setFlash('success','Webhook sent');
-        return $this->redirect(Yii::$app->request->referrer);
+        \LNPay::$app->session->setFlash('success','Webhook sent');
+        return $this->redirect(\LNPay::$app->request->referrer);
     }
 
     public function actionTestWebhook()
     {
         $model = new WebhookTestForm();
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+        if ($model->load(\LNPay::$app->request->post()) && $model->validate()) {
             $IW = IntegrationWebhook::find()->where(['external_hash'=>$model->integration_webhook_id])->one();
             $actionFeedObject = ActionComponent::getTestWebhookActionFeedObject(ActionName::find()->where(['name'=>$model->action_id])->one()->id);
             $iwhr = IntegrationWebhookRequest::prepareRequest($IW,$actionFeedObject);
@@ -70,10 +70,10 @@ class WebhookController extends BaseDashController
 
             $iwhr->delete();
 
-            Yii::$app->session->setFlash('success','Test Webhook sent');
+            \LNPay::$app->session->setFlash('success','Test Webhook sent');
         }
 
-        return $this->redirect(Yii::$app->request->referrer);
+        return $this->redirect(\LNPay::$app->request->referrer);
     }
 
     /**
@@ -84,9 +84,9 @@ class WebhookController extends BaseDashController
     public function actionCreate()
     {
         $model = new IntegrationWebhook();
-        $model->user_id = Yii::$app->user->id;
+        $model->user_id = \LNPay::$app->user->id;
 
-        if ($model->load(Yii::$app->request->post())) {
+        if ($model->load(\LNPay::$app->request->post())) {
             $names = [];
             foreach ($model->action_name_id as $type => $action_ids) {
                 if (is_array($action_ids))
@@ -96,7 +96,7 @@ class WebhookController extends BaseDashController
             $model->action_name_id = $names;
 
             if ($model->save()) {
-                Yii::$app->session->setFlash('success','Webhook created!');
+                \LNPay::$app->session->setFlash('success','Webhook created!');
                 return $this->redirect(['index', 'id' => $model->external_hash]);
             }
 
@@ -118,7 +118,7 @@ class WebhookController extends BaseDashController
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post())) {
+        if ($model->load(\LNPay::$app->request->post())) {
             $names = [];
             foreach ($model->action_name_id as $type => $action_ids) {
                 if (is_array($action_ids))
@@ -128,7 +128,7 @@ class WebhookController extends BaseDashController
             $model->action_name_id = $names;
 
             if ($model->save()) {
-                Yii::$app->session->setFlash('success','Webhook updated!');
+                \LNPay::$app->session->setFlash('success','Webhook updated!');
                 return $this->redirect(['index', 'id' => $model->external_hash]);
             }
 
@@ -163,7 +163,7 @@ class WebhookController extends BaseDashController
      */
     protected function findModel($id)
     {
-        if (($model = IntegrationWebhook::find()->where(['external_hash'=>$id])->andWhere(['user_id'=>Yii::$app->user->id])->one()) !== null) {
+        if (($model = IntegrationWebhook::find()->where(['external_hash'=>$id])->andWhere(['user_id'=>\LNPay::$app->user->id])->one()) !== null) {
             return $model;
         }
 

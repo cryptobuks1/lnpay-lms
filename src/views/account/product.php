@@ -2,7 +2,7 @@
 
 use lnpay\models\User;$this->title = 'Your Products';
 $this->beginContent('@app/views/layouts/sidebar/_nav-account.php');
-$user = Yii::$app->user->identity;
+$user = \LNPay::$app->user->identity;
 $usage = $user->getWalletAPIUsageByPeriod(strtotime('-30 days'),time());
 
 ?>

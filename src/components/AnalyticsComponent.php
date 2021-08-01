@@ -12,7 +12,7 @@ class AnalyticsComponent extends Component
     public static function log($userId,$eventName,$params=[])
     {
         if (getenv('AMPLITUDE_API_KEY')) {
-            Yii::$app->queue->priority(2048)->push(new AnalyticsLogJob([
+            \LNPay::$app->queue->priority(2048)->push(new AnalyticsLogJob([
                 'userId' => $userId,
                 'eventName' => $eventName,
                 'params'=>$params

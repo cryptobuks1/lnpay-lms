@@ -16,7 +16,7 @@ $isCustodial = $wallet->ln_node_id == \lnpay\node\models\LnNode::getLnpayNodeQue
     <ul class="list-group">
         <li class="list-group-item"><a target="_blank" href="https://1ml.com/node/<?=$lnNode->default_pubkey;?>"><?=$lnNode->default_pubkey;?></a></li>
     </ul>
-    <?php if ($lnNode->user_id == Yii::$app->user->id) { ?>
+    <?php if ($lnNode->user_id == \LNPay::$app->user->id) { ?>
         <p>
             <a href="/node/ln/index/<?=$lnNode->id;?>" class="btn btn-primary">View Node <i class="glyphicon glyphicon-arrow-right"></i></a>
         </p>

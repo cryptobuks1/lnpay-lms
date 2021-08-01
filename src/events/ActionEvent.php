@@ -30,8 +30,8 @@ class ActionEvent extends Event
     {
         if ($this->_userObject)
             return $this->_userObject;
-        else if (Yii::$app instanceof \yii\web\Application)
-            return User::findOne(Yii::$app->user->id);
+        else if (\LNPay::$app instanceof \yii\web\Application)
+            return User::findOne(\LNPay::$app->user->id);
         else
             throw new \Exception('User id is missing!');
 

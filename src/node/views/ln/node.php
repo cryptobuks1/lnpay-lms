@@ -39,7 +39,7 @@ $nodeReady = $activeChannels && $onchain_active && $gi;
     </p>
 </div>
 <?php
-if (Yii::$app->request->getQueryParam('showinfo')) {
+if (\LNPay::$app->request->getQueryParam('showinfo')) {
     echo \yii\bootstrap\Tabs::widget([
         'items' => [
             [

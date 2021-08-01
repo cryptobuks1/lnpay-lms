@@ -139,7 +139,7 @@ class NodeAddForm extends Model
         });
 
         if (!$found) {
-            Yii::$app->session->setFlash('invalid_tls',TRUE);
+            \LNPay::$app->session->setFlash('invalid_tls',TRUE);
             $this->addError($attribute_name,'Node Host/IP is not listed in TLS cert!');
         }
     }
@@ -325,7 +325,7 @@ class NodeAddForm extends Model
             $node = new LnNode();
         }
 
-        $node->user_id = $this->user_id?:Yii::$app->user->id;
+        $node->user_id = $this->user_id?:\LNPay::$app->user->id;
         $node->alias = $nodeInfo['alias'];
         $node->ln_node_implementation_id = $this->node_implementation;
         $node->default_pubkey = $nodeInfo['identity_pubkey'];

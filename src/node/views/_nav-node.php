@@ -5,7 +5,7 @@ use yii\helpers\Html;
 ?>
 <?=$this->render('@app/views/layouts/sidebar/__base_sidebar'); ?>
 
-<?php $node = Yii::$app->controller->nodeObject; ?>
+<?php $node = \LNPay::$app->controller->nodeObject; ?>
 
 
 <div class="sidebar-layout">

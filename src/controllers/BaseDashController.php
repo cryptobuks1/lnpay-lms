@@ -11,6 +11,7 @@ use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use \lnpay\models\User;
 
+
 /**
  * Home controller
  */
@@ -19,10 +20,10 @@ class BaseDashController extends Controller
     public function beforeAction($event)
     {
         parent::beforeAction($event);
-        if (!Yii::$app->user->isGuest)
-            LNPayComponent::processTz(Yii::$app->user->identity);
+        if (!\LNPay::$app->user->isGuest)
+            LNPayComponent::processTz(\LNPay::$app->user->identity);
 
-        if (!Yii::$app->user->identity->lnNode) {
+        if (!@\LNPay::$app->user->identity->lnNode) {
             return $this->redirect('/node/dashboard/add');
         }
 

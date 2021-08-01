@@ -92,18 +92,18 @@ class BaseLinkAnalytics extends \yii\db\ActiveRecord
         $local_refer = false;
         $dObjects = CustyDomain::find()->where(['id'=>[CustyDomain::DEFAULT_DOMAIN_LNPAY,CustyDomain::DEFAULT_DOMAIN_ID]])->all();
         foreach ($dObjects as $cd)
-            if (stripos(Yii::$app->request->getReferrer(),$cd->domain_name)!==FALSE) {
+            if (stripos(\LNPay::$app->request->getReferrer(),$cd->domain_name)!==FALSE) {
                 return -1;
             }
 
         $ba = new BaseLinkAnalytics();
         $ba->base_link_id = $baseLink->id;
         $ba->engagement_type = $engagement_type;
-        $ba->referrer = Yii::$app->request->getReferrer();
-        $ba->requester_ip = Yii::$app->request->getUserIp();
-        $ba->user_agent = Yii::$app->request->getUserAgent();
-        $ba->domain = Yii::$app->request->getHostInfo();
-        $ba->appendJsonData(ArrayHelper::merge(Yii::$app->request->getQueryParams(),$data));
+        $ba->referrer = \LNPay::$app->request->getReferrer();
+        $ba->requester_ip = \LNPay::$app->request->getUserIp();
+        $ba->user_agent = \LNPay::$app->request->getUserAgent();
+        $ba->domain = \LNPay::$app->request->getHostInfo();
+        $ba->appendJsonData(ArrayHelper::merge(\LNPay::$app->request->getQueryParams(),$data));
         if ($b = $ba->save()) {
             return true;
         }

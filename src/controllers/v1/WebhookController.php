@@ -44,8 +44,8 @@ class WebhookController extends BaseApiController
 
     public function actionSubscribe($serviceId)
     {
-        $body = Yii::$app->getRequest()->getBodyParams();
-        $params = Yii::$app->getRequest()->getQueryParams();
+        $body = \LNPay::$app->getRequest()->getBodyParams();
+        $params = \LNPay::$app->getRequest()->getQueryParams();
         Yii::info("Body: ".print_r($body,TRUE),__METHOD__);
         Yii::info("Request URL: ".print_r($params,TRUE),__METHOD__);
 
@@ -63,23 +63,23 @@ class WebhookController extends BaseApiController
         $hookUrl = $body['hookUrl'];
 
         $wallet = Wallet::find()->where(['external_hash'=>@$body['wallet_id']])->one();
-        if ($wallet && ($wallet->user_id != Yii::$app->user->id)) {
+        if ($wallet && ($wallet->user_id != \LNPay::$app->user->id)) {
             throw new BadRequestHttpException('You do not have link permission!');
         }
 
         $model = new IntegrationWebhook();
         $model->wallet_id = @$wallet->id;
-        $model->user_id = Yii::$app->user->id;
+        $model->user_id = \LNPay::$app->user->id;
         $model->action_name_id = [$actionObject->name];
         $model->http_method = 'POST';
         $model->endpoint_url = $hookUrl;
         $model->integration_service_id = IntegrationService::SERVICE_ZAPIER;
 
         if ($model->save()) {
-            $response = Yii::$app->getResponse();
+            $response = \LNPay::$app->getResponse();
             $response->setStatusCode(201);
 
-            $af = ActionFeed::find()->where(['user_id'=>Yii::$app->user->id,'action_name_id'=>$actionObject->id])->orderBy('id DESC')->one();
+            $af = ActionFeed::find()->where(['user_id'=>\LNPay::$app->user->id,'action_name_id'=>$actionObject->id])->orderBy('id DESC')->one();
 
             if ($model->endpoint_url == 'https://hooks.zapier.com/fake-subscription-url')
                 $model->delete();
@@ -95,7 +95,7 @@ class WebhookController extends BaseApiController
 
     public function actionUnsubscribe($serviceId)
     {
-        $params = Yii::$app->getRequest()->getQueryParams();
+        $params = \LNPay::$app->getRequest()->getQueryParams();
         Yii::info("Request URL: ".print_r($params,TRUE),__METHOD__);
 
         $serviceObject = IntegrationService::find()->where(['name'=>$serviceId])->one();
@@ -109,10 +109,10 @@ class WebhookController extends BaseApiController
         $hookUrl = $params['hookUrl'];
 
         $defaultActionWhere = []; //['IS NOT',new \yii\db\JsonExpression("JSON_EXTRACT(`action_name_id`, '$.{$actionObject->name}');"),NULL];
-        $model = IntegrationWebhook::find()->where(['endpoint_url'=>$hookUrl,'user_id'=>Yii::$app->user->id])->andWhere($defaultActionWhere)->one();
+        $model = IntegrationWebhook::find()->where(['endpoint_url'=>$hookUrl,'user_id'=>\LNPay::$app->user->id])->andWhere($defaultActionWhere)->one();
 
         if ($model->delete()) {
-            $response = Yii::$app->getResponse();
+            $response = \LNPay::$app->getResponse();
             $response->setStatusCode(200);
 
             return true;

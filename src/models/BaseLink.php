@@ -152,30 +152,30 @@ class BaseLink extends \yii\db\ActiveRecord
         if ($distro_method_name === NULL)
             $distro_method_name = DistroMethod::NAME_WEB;
 
-        $preserveBaseUrl = Yii::$app->urlManager->baseUrl;
+        $preserveBaseUrl = \LNPay::$app->urlManager->baseUrl;
         $base_url = (@$this->custyDomain->fullBaseUrl?:$preserveBaseUrl."/to/"); //if not set in DB
-        Yii::$app->urlManager->setBaseUrl($base_url);
+        \LNPay::$app->urlManager->setBaseUrl($base_url);
 
-        $url = Yii::$app->urlManager->createAbsoluteUrl(["{$this->short_url}/{$distro_method_name}"]+$params);
+        $url = \LNPay::$app->urlManager->createAbsoluteUrl(["{$this->short_url}/{$distro_method_name}"]+$params);
 
-        Yii::$app->urlManager->setBaseUrl($preserveBaseUrl);
+        \LNPay::$app->urlManager->setBaseUrl($preserveBaseUrl);
 
         return $url;
     }
 
     public function getRawUrl($params=[])
     {
-        if (Yii::$app instanceof Yii\web\Application){
-            $preserveBaseUrl = Yii::$app->urlManager->baseUrl;
+        if (\LNPay::$app instanceof Yii\web\Application){
+            $preserveBaseUrl = \LNPay::$app->urlManager->baseUrl;
         }
 
         $base_url = (@$this->custyDomain->fullBaseUrl?:$preserveBaseUrl."/to/"); //if not set in DB
-        Yii::$app->urlManager->setBaseUrl($base_url);
+        \LNPay::$app->urlManager->setBaseUrl($base_url);
 
-        $url = Yii::$app->urlManager->createAbsoluteUrl(["{$this->short_url}"]+$params);
+        $url = \LNPay::$app->urlManager->createAbsoluteUrl(["{$this->short_url}"]+$params);
 
-        if (Yii::$app instanceof Yii\web\Application) {
-            Yii::$app->urlManager->setBaseUrl($preserveBaseUrl);
+        if (\LNPay::$app instanceof Yii\web\Application) {
+            \LNPay::$app->urlManager->setBaseUrl($preserveBaseUrl);
         }
 
         return $url;

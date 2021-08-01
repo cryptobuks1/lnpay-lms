@@ -30,7 +30,7 @@ $bakeMac->permissions = $model->defaultMacaroonPerms;
                 ->textarea(['maxlength' => true,'placeholder'=>'e.g. -----BEGIN CERTIFICATE-----'])
                 ->label('TLS Cert raw or HEX')
                 ->hint('The HOST above MUST match your externalip OR tlsextraip in lnd.conf!!'); ?>
-        <?php if (Yii::$app->session->getFlash('invalid_tls')) { ?>
+        <?php if (\LNPay::$app->session->getFlash('invalid_tls')) { ?>
             <p class="alert alert-danger">
                 We are practicing good node hygiene here. You probably need to add the following to lnd.conf:
                 <br/><br/>

@@ -9,7 +9,7 @@
     </div>
     <div class="wallet-content">
         <div class="row">
-          <?php if (Yii::$app->user->isGuest) {?>
+          <?php if (\LNPay::$app->user->isGuest) {?>
 
               <div class="col-md-12 text-center">
                   <?=Html::a('Register / Sign in to access',['/home/signup'],['class'=>'btn btn-info btn-lg']);?>

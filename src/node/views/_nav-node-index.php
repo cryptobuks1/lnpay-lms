@@ -1,4 +1,4 @@
-<?=$this->render('@app/src/core/views/layouts/sidebar/__base_sidebar'); ?>
+<?=$this->render('@app/views/layouts/sidebar/__base_sidebar'); ?>
 
 <div class="sidebar-layout">
     <div class="sidebar">

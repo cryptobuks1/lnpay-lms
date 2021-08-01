@@ -74,8 +74,8 @@ class WebhookReceiverController extends Controller
      */
     public function actionLnNodeIngestion()
     {
-        $postBody = Yii::$app->request->getBodyParams();
-        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $postBody = \LNPay::$app->request->getBodyParams();
+        \LNPay::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
         if (! ($nodeObject = LnNode::findOne(@$postBody['nodeObject']['id']))) {
             throw new \yii\web\ServerErrorHttpException('Invalid node specified!');

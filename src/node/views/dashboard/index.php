@@ -8,8 +8,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 
-if ($details = Yii::$app->session->getFlash('new_node_details')) {
-    Yii::$app->session->set('new_node_details_1',$details);
+if ($details = \LNPay::$app->session->getFlash('new_node_details')) {
+    \LNPay::$app->session->set('new_node_details_1',$details);
     \yii\bootstrap\Modal::begin([
         'id'=>'cred-modal',
         'header' => '<h2>'.$details['node_id'].' Credentials</h2>',
