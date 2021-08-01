@@ -2,13 +2,13 @@
 
 namespace tests\unit\models;
 
-use lnpay\core\components\ActionComponent;
-use lnpay\core\models\action\ActionFeed;
-use lnpay\core\models\action\ActionName;
-use lnpay\core\models\User;
+use lnpay\components\ActionComponent;
+use lnpay\models\action\ActionFeed;
+use lnpay\models\action\ActionName;
+use lnpay\models\User;
 
-use lnpay\core\events\ActionEvent;
-use lnpay\core\models\wallet\WalletTransaction;
+use lnpay\events\ActionEvent;
+use lnpay\models\wallet\WalletTransaction;
 
 
 class ActionComponentCest

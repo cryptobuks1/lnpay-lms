@@ -2,11 +2,11 @@
 
 namespace tests\unit\models;
 
-use lnpay\core\models\BaseLink;
-use lnpay\core\models\integration\IntegrationWebhook;
-use lnpay\core\models\LnTx;
-use lnpay\core\models\StatusType;
-use lnpay\core\models\User;
+use lnpay\models\BaseLink;
+use lnpay\models\integration\IntegrationWebhook;
+use lnpay\models\LnTx;
+use lnpay\models\StatusType;
+use lnpay\models\User;
 use lnpay\fixtures\UserAccessKeyFixture;
 use lnpay\fixtures\UserFixture;
 use Yii;

@@ -1,10 +1,10 @@
 <?php
 namespace lnpay\node\models;
 
-use lnpay\core\components\HelperComponent;
+use lnpay\components\HelperComponent;
 use lnpay\node\components\LndNodeConnector;
 use lnpay\node\components\LnMacaroonObject;
-use lnpay\core\models\StatusType;
+use lnpay\models\StatusType;
 use lnpay\node\jobs\AddLndSubnodeJob;
 use yii\base\Exception;
 use yii\base\Model;

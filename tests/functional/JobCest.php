@@ -1,6 +1,6 @@
 <?php
 
-use lnpay\core\jobs\AnalyticsLogJob;
+use lnpay\jobs\AnalyticsLogJob;
 
 class JobCest
 {

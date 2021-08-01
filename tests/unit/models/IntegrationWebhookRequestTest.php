@@ -2,14 +2,14 @@
 
 namespace tests\unit\models;
 
-use lnpay\core\models\action\ActionFeed;
-use lnpay\core\models\action\ActionName;
-use lnpay\core\models\integration\IntegrationWebhook;
-use lnpay\core\models\integration\IntegrationWebhookRequest;
-use lnpay\core\models\LnTx;
-use lnpay\core\models\StatusType;
-use lnpay\core\models\User;
-use lnpay\core\models\wallet\Wallet;
+use lnpay\models\action\ActionFeed;
+use lnpay\models\action\ActionName;
+use lnpay\models\integration\IntegrationWebhook;
+use lnpay\models\integration\IntegrationWebhookRequest;
+use lnpay\models\LnTx;
+use lnpay\models\StatusType;
+use lnpay\models\User;
+use lnpay\models\wallet\Wallet;
 use lnpay\fixtures\UserFixture;
 use lnpay\fixtures\WalletFixture;
 use Yii;

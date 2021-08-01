@@ -1,6 +1,6 @@
 <?php
 
-use lnpay\core\models\LnNodeSearch;
+use lnpay\models\LnNodeSearch;
 use lnpay\node\models\NodeListener;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
@@ -8,7 +8,7 @@ use yii\grid\GridView;
 use yii\web\View;
 
 /* @var $this yii\web\View */
-/* @var $searchModel lnpay\core\models\LnNodeSearch */
+/* @var $searchModel lnpay\models\LnNodeSearch */
 /* @var $node \lnpay\node\models\LnNode */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
@@ -23,8 +23,8 @@ $nodeReady = $activeChannels && $onchain_active && $gi;
 <?php /* ?>
     <div class="pull-right">
         <h3>Status: <?=$node->statusType->display_name;?></h3>
-        <?php if ($node->status_type_id == \lnpay\core\models\StatusType::LN_SUBNODE_STOPPED) echo Html::a('Start Node',['/node/ln/start-node'],['class'=>'btn btn-success']); ?>
-        <?php if ($node->status_type_id == \lnpay\core\models\StatusType::LN_SUBNODE_RUNNING) echo Html::a('Stop Node',['/node/ln/stop-node'],['class'=>'btn btn-danger']); ?>
+        <?php if ($node->status_type_id == \lnpay\models\StatusType::LN_SUBNODE_STOPPED) echo Html::a('Start Node',['/node/ln/start-node'],['class'=>'btn btn-success']); ?>
+        <?php if ($node->status_type_id == \lnpay\models\StatusType::LN_SUBNODE_RUNNING) echo Html::a('Stop Node',['/node/ln/stop-node'],['class'=>'btn btn-danger']); ?>
     </div>
 <?php */ ?>
 <div class="jumbotron well">

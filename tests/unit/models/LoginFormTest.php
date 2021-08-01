@@ -2,7 +2,7 @@
 
 namespace tests\unit\models;
 
-use lnpay\core\models\LoginForm;
+use lnpay\models\LoginForm;
 
 class LoginFormTest extends \Codeception\Test\Unit
 {

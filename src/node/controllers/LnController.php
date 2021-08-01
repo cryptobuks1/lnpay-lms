@@ -2,13 +2,13 @@
 
 namespace lnpay\node\controllers;
 
-use lnpay\core\behaviors\UserAccessKeyBehavior;
-use lnpay\core\models\StatusType;
+use lnpay\behaviors\UserAccessKeyBehavior;
+use lnpay\models\StatusType;
 use lnpay\node\models\NodeAddForm;
 use lnpay\node\models\NodeListener;
 use Yii;
 use lnpay\node\models\LnNode;
-use lnpay\core\models\LnNodeSearch;
+use lnpay\models\LnNodeSearch;
 use yii\data\ActiveDataProvider;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;

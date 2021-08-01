@@ -1,13 +1,13 @@
 <?php
 
-use lnpay\core\models\integration\IntegrationWebhookSearch;
+use lnpay\models\integration\IntegrationWebhookSearch;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\web\View;
 
 /* @var $this yii\web\View */
-/* @var $searchModel lnpay\core\models\integration\IntegrationWebhookSearch */
+/* @var $searchModel lnpay\models\integration\IntegrationWebhookSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'RPC Event Forwarder';

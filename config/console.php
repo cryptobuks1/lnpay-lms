@@ -26,7 +26,7 @@ $config = [
             'class' => 'yii\rbac\DbManager',
         ],
         'urlManager' => [
-            'class'=>'lnpay\core\components\LNPayUrlManager',
+            'class'=>'lnpay\components\LNPayUrlManager',
             'enablePrettyUrl' => true,
             'enableStrictParsing' => false,
             'showScriptName' => false,

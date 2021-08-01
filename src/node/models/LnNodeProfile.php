@@ -2,10 +2,10 @@
 
 namespace lnpay\node\models;
 
-use lnpay\core\behaviors\JsonDataBehavior;
-use lnpay\core\components\HelperComponent;
+use lnpay\behaviors\JsonDataBehavior;
+use lnpay\components\HelperComponent;
 use lnpay\node\components\LnMacaroonObject;
-use lnpay\core\models\StatusType;
+use lnpay\models\StatusType;
 use LndConnect\LndConnect;
 use Yii;
 

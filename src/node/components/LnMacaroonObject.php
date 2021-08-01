@@ -1,7 +1,7 @@
 <?php
 namespace lnpay\node\components;
 
-use lnpay\core\components\HelperComponent;
+use lnpay\components\HelperComponent;
 use Yii;
 use yii\base\Component;
 use yii\helpers\VarDumper;

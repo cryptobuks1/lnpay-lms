@@ -2,18 +2,18 @@
 
 namespace lnpay\node\models;
 
-use lnpay\core\behaviors\JsonDataBehavior;
-use lnpay\core\components\HelperComponent;
+use lnpay\behaviors\JsonDataBehavior;
+use lnpay\components\HelperComponent;
 use lnpay\node\components\LndNodeConnector;
 use lnpay\node\components\LnMacaroonObject;
-use lnpay\core\components\SupervisorComponent;
+use lnpay\components\SupervisorComponent;
 
-use lnpay\core\jobs\SupervisorRemoveLndRpcConfigFileJob;
-use lnpay\core\models\action\ActionData;
-use lnpay\core\models\action\ActionName;
-use lnpay\core\models\StatusType;
-use lnpay\core\models\User;
-use lnpay\core\models\wallet\Wallet;
+use lnpay\jobs\SupervisorRemoveLndRpcConfigFileJob;
+use lnpay\models\action\ActionData;
+use lnpay\models\action\ActionName;
+use lnpay\models\StatusType;
+use lnpay\models\User;
+use lnpay\models\wallet\Wallet;
 use Yii;
 use yii\helpers\VarDumper;
 

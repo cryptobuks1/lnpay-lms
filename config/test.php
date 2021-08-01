@@ -2,21 +2,21 @@
 
 $config = [
     'id' => 'basic',
-    'basePath' => dirname(__DIR__).'/src/core/',
+    'basePath' => dirname(__DIR__).'/src/',
     'bootstrap' => [
         'log',
         'monitor',
         'node'
     ],
     'aliases'=> [
-        '@app'=> dirname(__DIR__),
-        '@app/core'=> dirname(__DIR__).'/src/core/',
+        '@root'=> dirname(__DIR__),
+        '@app'=> dirname(__DIR__).'/src/',
         '@app/node'=> dirname(__DIR__).'/src/node/',
         '@vendor'=> dirname(__DIR__).'/vendor',
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
     ],
-    'controllerNamespace' => 'lnpay\\core\\controllers',
+    'controllerNamespace' => 'lnpay\\controllers',
     'runtimePath' => dirname(__FILE__) . '/../runtime',
     'defaultRoute'=>'home',
     'modules'=>[
@@ -67,7 +67,7 @@ $config = [
             'class' => 'yii\mutex\FileMutex'
         ],
         'user' => [
-            'identityClass' => 'lnpay\core\models\User',
+            'identityClass' => 'lnpay\models\User',
             'enableAutoLogin' => true,
             'loginUrl'=>['/home/login'],
         ],
@@ -75,7 +75,7 @@ $config = [
             'errorAction' => 'home/error',
         ],
         'urlManager' => [
-            'class'=>'lnpay\core\components\LNPayUrlManager',
+            'class'=>'lnpay\components\LNPayUrlManager',
             'enablePrettyUrl' => true,
             'enableStrictParsing' => false,
             'showScriptName' => true,
@@ -140,13 +140,13 @@ $config = [
                     ]
                 ],
                 [
-                    'class' => 'lnpay\core\components\ApiLogTarget',
+                    'class' => 'lnpay\components\ApiLogTarget',
                 ],
             ],
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
-            'viewPath' => '@app/core/mail',
+            'viewPath' => '@app/mail',
             'transport' => [
                 'class' => 'Swift_SmtpTransport',
                 'host' => getenv('DEFAULT_EMAIL_HOST'),

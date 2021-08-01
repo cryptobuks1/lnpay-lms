@@ -2,7 +2,7 @@
 
 namespace lnpay\node\controllers;
 
-use lnpay\core\models\integration\IntegrationWebhookSearch;
+use lnpay\models\integration\IntegrationWebhookSearch;
 use lnpay\node\models\LnNode;
 use lnpay\node\models\NodeListener;
 use Yii;

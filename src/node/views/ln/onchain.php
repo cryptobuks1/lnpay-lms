@@ -1,6 +1,6 @@
 <?php
 
-use lnpay\core\models\LnNodeSearch;
+use lnpay\models\LnNodeSearch;
 use lnpay\node\models\NodeListener;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;

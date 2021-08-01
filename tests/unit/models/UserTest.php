@@ -2,9 +2,9 @@
 
 namespace tests\unit\models;
 
-use lnpay\core\models\action\ActionFeed;
-use lnpay\core\models\action\ActionName;
-use lnpay\core\models\User;
+use lnpay\models\action\ActionFeed;
+use lnpay\models\action\ActionName;
+use lnpay\models\User;
 use lnpay\fixtures\UserAccessKeyFixture;
 use lnpay\fixtures\UserFixture;
 

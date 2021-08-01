@@ -3,7 +3,7 @@
 namespace tests\unit\components\node;
 
 
-use lnpay\core\components\HelperComponent;
+use lnpay\components\HelperComponent;
 use lnpay\node\components\LnMacaroonObject;
 
 class LnMacaroonObjectTest extends \Codeception\Test\Unit

@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 ?>
-<?=$this->render('@app/core/views/layouts/sidebar/__base_sidebar'); ?>
+<?=$this->render('@app/views/layouts/sidebar/__base_sidebar'); ?>
 
 <?php $node = Yii::$app->controller->nodeObject; ?>
 

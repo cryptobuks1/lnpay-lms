@@ -1,6 +1,6 @@
 <?php
 
-use lnpay\core\models\LnNodeSearch;
+use lnpay\models\LnNodeSearch;
 use lnpay\node\models\NodeListener;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
@@ -8,7 +8,7 @@ use yii\grid\GridView;
 use yii\web\View;
 
 /* @var $this yii\web\View */
-/* @var $searchModel lnpay\core\models\LnNodeSearch */
+/* @var $searchModel lnpay\models\LnNodeSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Connect';

@@ -2,7 +2,7 @@
 
 namespace lnpay\node\controllers\api\v1;
 
-use lnpay\core\behaviors\UserAccessKeyBehavior;
+use lnpay\behaviors\UserAccessKeyBehavior;
 use lnpay\node\models\LnNode;
 use Yii;
 use yii\web\BadRequestHttpException;
@@ -10,7 +10,7 @@ use yii\web\NotFoundHttpException;
 
 class PaymentsController extends NodeApiController
 {
-    public $modelClass = 'lnpay\core\models\LnTx';
+    public $modelClass = 'lnpay\models\LnTx';
 
     public function actionDecodeinvoice($payment_request)
     {

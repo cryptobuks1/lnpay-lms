@@ -2,7 +2,7 @@
 
 namespace lnpay\node\controllers\api\v1;
 
-use lnpay\core\controllers\v1\BaseApiController;
+use lnpay\controllers\v1\BaseApiController;
 use lnpay\node\models\LnNode;
 use Yii;
 use yii\web\BadRequestHttpException;

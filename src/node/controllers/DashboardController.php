@@ -7,7 +7,7 @@ use lnpay\node\models\NodeCreateForm;
 use lnpay\node\models\NodeListener;
 use Yii;
 use lnpay\node\models\LnNode;
-use lnpay\core\models\LnNodeSearch;
+use lnpay\models\LnNodeSearch;
 use yii\data\ActiveDataProvider;
 use yii\helpers\VarDumper;
 use yii\web\Controller;

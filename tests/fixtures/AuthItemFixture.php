@@ -8,6 +8,6 @@ use yii\test\ActiveFixture;
 class AuthItemFixture extends ActiveFixture
 {
     public $depends = [];
-    public $dataFile = '@app/tests/_data/auth_item.php';
+    public $dataFile = '@root/tests/_data/auth_item.php';
     public $tableName = 'auth_item';
 }

@@ -2,12 +2,12 @@
 
 namespace tests\unit\models;
 
-use lnpay\core\behaviors\UserAccessKeyBehavior;
+use lnpay\behaviors\UserAccessKeyBehavior;
 use lnpay\node\models\LnNode;
 use lnpay\node\models\NodeListener;
-use lnpay\core\models\wallet\Wallet;
-use lnpay\core\models\StatusType;
-use lnpay\core\models\User;
+use lnpay\models\wallet\Wallet;
+use lnpay\models\StatusType;
+use lnpay\models\User;
 use Yii;
 
 class NodeListenerTest extends \Codeception\Test\Unit

@@ -2,7 +2,6 @@
 
 $config = [
     'id' => 'basic',
-    'basePath' => dirname(__DIR__).'/src/core/',
     'bootstrap' => [
         'log',
         'monitor',
@@ -40,7 +39,7 @@ $config = [
             'class' => 'yii\web\DbSession',
         ],
         'user' => [
-            'identityClass' => 'lnpay\core\models\User',
+            'identityClass' => 'lnpay\models\User',
             'enableAutoLogin' => true,
             'loginUrl'=>['/home/login'],
             'as mfa' => [
@@ -55,12 +54,12 @@ $config = [
         'log' => [
             'targets' => [
                 [
-                    'class' => 'lnpay\core\components\ApiLogTarget',
+                    'class' => 'lnpay\components\ApiLogTarget',
                 ],
             ],
         ],
         'urlManager' => [
-            'class'=>'lnpay\core\components\LNPayUrlManager',
+            'class'=>'lnpay\components\LNPayUrlManager',
             'enablePrettyUrl' => true,
             'enableStrictParsing' => false,
             'showScriptName' => false,
@@ -103,7 +102,7 @@ $config = [
             ],
         ],
         'request' => [
-            'class'=>'lnpay\core\components\LNPayRequestComponent',
+            'class'=>'lnpay\components\LNPayRequestComponent',
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => getenv('YII_COOKIE_VALIDATION_KEY'),
             'parsers' => [
@@ -114,7 +113,7 @@ $config = [
             'translations' => [
                 '*' => [
                     'class' => 'yii\i18n\PhpMessageSource',
-                    'basePath' => '@app/core/messages', // if advanced application, set @frontend/messages
+                    'basePath' => '@app/messages', // if advanced application, set @frontend/messages
                     'sourceLanguage' => 'en',
                     'fileMap' => [
                         //'main' => 'main.php',
