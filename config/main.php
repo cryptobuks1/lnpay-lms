@@ -50,13 +50,7 @@ return [
                     'levels' => ['error','warning','info'],
                     'logTable'=>'log',
                     'except' => [
-                        'yii\web\HttpException:404',
-                        'yii\rbac\DbManager:*',
-                        'yii\db\*',
-                        'yii\web\Session::*',
-                        'yii\filters\RateLimiter::*',
-                        'yii\web\User::login',
-                        'yii\web\User::loginByCookie'
+
                     ],
                     'maskVars'=>[
                         '_SERVER.DEFAULT_EMAIL_USERNAME',
